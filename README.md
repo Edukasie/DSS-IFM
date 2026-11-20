@@ -1,2 +1,2 @@
-# DSS-Frontend
-Digital Suggestion System - Frontend PWA
+# DSS Frontend
+Mobile-first PWA frontend. Preview with VS Code Live Server.
