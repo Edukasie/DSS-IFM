@@ -1,4 +1,4 @@
-const CACHE = 'dss-admin-shell-v6';
+const CACHE = 'dss-admin-shell-v7';
 
 const FILES = [
   './',
@@ -6,7 +6,8 @@ const FILES = [
   './manifest.json',
   './assets/css/style.css',
   './assets/js/config.js',
-  './assets/js/app.js'
+  './assets/js/app.js',
+  './assets/images/edukasie-logo.jpg'
 ];
 
 self.addEventListener('install', event => {

@@ -96,6 +96,59 @@
           <div class="notice"><span>i</span><div><b>Dashboard tahap awal</b><p>Autentikasi sudah aktif. Angka ringkasan dan daftar suggestion akan ditampilkan setelah endpoint data dashboard selesai dibuat di backend.</p></div></div>
         </div>
 
+
+        <section id="employeesPage" class="employees-page" hidden>
+          <div class="employee-toolbar panel">
+            <div class="employee-filters">
+              <input id="employeeSearch" type="search" placeholder="Cari nama, NIK, atau username...">
+              <select id="employeeRoleFilter">
+                <option value="">Semua Role</option>
+                <option value="ADMIN">ADMIN</option><option value="EMPLOYEE">EMPLOYEE</option>
+                <option value="LEADER">LEADER</option><option value="SUPERVISOR">SUPERVISOR</option>
+                <option value="MANAGER">MANAGER</option>
+              </select>
+              <select id="employeeStatusFilter">
+                <option value="">Semua Status</option><option value="active">Aktif</option>
+                <option value="inactive">Nonaktif</option>
+              </select>
+              <button id="employeeSearchButton" class="secondary-btn" type="button">Cari</button>
+            </div>
+            <button id="addEmployeeButton" class="primary-btn employee-add-btn" type="button">＋ Tambah Karyawan</button>
+          </div>
+          <div class="employee-summary">
+            <div><b id="employeeCount">0</b><span>Data karyawan</span></div>
+            <div><b id="employeeActiveCount">0</b><span>Akun aktif</span></div>
+          </div>
+          <div class="panel employee-table-panel">
+            <div class="employee-table-heading"><div><h3>Daftar Karyawan</h3><p>Kelola akun dan hak akses pengguna DSS.</p></div><span id="employeeLoadState" class="employee-load-state">Memuat data...</span></div>
+            <div class="table-wrap">
+              <table class="employee-table">
+                <thead><tr><th>IDENTITAS</th><th>USERNAME</th><th>DEPARTEMEN</th><th>ROLE</th><th>STATUS</th><th>AKSI</th></tr></thead>
+                <tbody id="employeeTableBody"><tr><td colspan="6" class="table-empty">Memuat data karyawan...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <div id="employeeModal" class="modal-backdrop" hidden>
+          <div class="employee-modal" role="dialog" aria-modal="true" aria-labelledby="employeeModalTitle">
+            <div class="modal-heading"><div><span class="eyebrow">MANAJEMEN PENGGUNA</span><h2 id="employeeModalTitle">Tambah Karyawan</h2><p>Lengkapi informasi akun DSS.</p></div><button id="closeEmployeeModal" class="modal-close" type="button" aria-label="Tutup">×</button></div>
+            <form id="employeeForm">
+              <input id="employeeRecordId" type="hidden">
+              <div class="employee-form-grid">
+                <label>Employee ID / NIK<input id="employeeIdInput" required maxlength="50" placeholder="Contoh: 123456"></label>
+                <label>Nama Lengkap<input id="employeeNameInput" required maxlength="120" placeholder="Nama karyawan"></label>
+                <label>Username<input id="employeeUsernameInput" required maxlength="80" placeholder="username"></label>
+                <label>Email (opsional)<input id="employeeEmailInput" type="email" maxlength="120" placeholder="nama@perusahaan.com"></label>
+                <label>Departemen<select id="employeeDepartmentInput" required><option value="1">Maintenance</option></select></label>
+                <label>Role<select id="employeeRoleInput" required><option value="EMPLOYEE">EMPLOYEE</option><option value="LEADER">LEADER</option><option value="SUPERVISOR">SUPERVISOR</option><option value="MANAGER">MANAGER</option><option value="ADMIN">ADMIN</option></select></label>
+                <label id="employeePasswordField" class="full-field">Password awal<input id="employeePasswordInput" type="password" minlength="12" autocomplete="new-password" placeholder="Minimal 12 karakter"><small>Password minimal 12 karakter.</small></label>
+              </div>
+              <div id="employeeFormMessage" class="form-message" role="status" aria-live="polite"></div>
+              <div class="modal-actions"><button id="cancelEmployeeButton" class="secondary-btn" type="button">Batal</button><button id="saveEmployeeButton" class="primary-btn" type="submit">Simpan Karyawan</button></div>
+            </form>
+          </div>
+        </div>
+
         <div id="placeholderPage" class="panel placeholder-panel" hidden>
           <div class="placeholder-icon">◈</div>
           <span class="eyebrow">MODUL DSS</span>
