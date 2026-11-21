@@ -6,6 +6,7 @@
   const message = document.getElementById('message');
   const loginButton = document.getElementById('loginButton');
   const passwordInput = document.getElementById('password');
+  let authToken = sessionStorage.getItem('dss_token') || '';
   const pageNames = {
     dashboard: ['Dashboard', 'Pantau aktivitas suggestion dan proses improvement Maintenance.'],
     suggestions: ['Data Suggestion', 'Daftar dan pengelolaan seluruh usulan improvement.'],
@@ -38,10 +39,12 @@
     document.getElementById('pageTitle').textContent = info[0];
     document.getElementById('welcomeText').textContent = info[1];
     document.getElementById('dashboardPage').hidden = page !== 'dashboard';
-    document.getElementById('placeholderPage').hidden = page === 'dashboard';
+    document.getElementById('employeesPage').hidden = page !== 'employees';
+    document.getElementById('placeholderPage').hidden = page === 'dashboard' || page === 'employees';
     document.getElementById('placeholderTitle').textContent = info[0];
     document.getElementById('placeholderDescription').textContent =
       'Modul ' + info[0] + ' akan diaktifkan setelah API dan alur datanya selesai dibuat.';
+    if (page === 'employees' && authToken) loadEmployees();
     document.querySelectorAll('.nav-link').forEach(btn =>
       btn.classList.toggle('active', btn.dataset.page === page)
     );
@@ -135,6 +138,133 @@
     }
   }
 
+
+  const employeeState = { rows: [], editingId: null };
+  const employeeEl = id => document.getElementById(id);
+
+  function employeeMessage(text, error = false) {
+    const el = employeeEl('employeeFormMessage');
+    el.textContent = text || '';
+    el.style.color = error ? '#b45309' : '#16836b';
+  }
+
+  function closeEmployeeModal() {
+    employeeEl('employeeModal').hidden = true;
+    employeeEl('employeeForm').reset();
+    employeeEl('employeeRecordId').value = '';
+    employeeState.editingId = null;
+    employeeMessage('');
+  }
+
+  function openEmployeeModal(row = null) {
+    employeeState.editingId = row ? row.id : null;
+    employeeEl('employeeModalTitle').textContent = row ? 'Edit Karyawan' : 'Tambah Karyawan';
+    employeeEl('employeeRecordId').value = row?.id || '';
+    employeeEl('employeeIdInput').value = row?.employee_id || '';
+    employeeEl('employeeNameInput').value = row?.full_name || '';
+    employeeEl('employeeUsernameInput').value = row?.username || '';
+    employeeEl('employeeEmailInput').value = row?.email || '';
+    employeeEl('employeeDepartmentInput').value = String(row?.department_id || 1);
+    employeeEl('employeeRoleInput').value = row?.role || 'EMPLOYEE';
+    employeeEl('employeePasswordField').hidden = !!row;
+    employeeEl('employeePasswordInput').required = !row;
+    employeeEl('employeePasswordInput').value = '';
+    employeeMessage('');
+    employeeEl('employeeModal').hidden = false;
+    employeeEl('employeeIdInput').focus();
+  }
+
+  function renderEmployees(rows) {
+    const body = employeeEl('employeeTableBody');
+    employeeEl('employeeCount').textContent = rows.length.toLocaleString('id-ID');
+    employeeEl('employeeActiveCount').textContent =
+      rows.filter(row => row.is_active).length.toLocaleString('id-ID');
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="6" class="table-empty">Tidak ada data karyawan yang cocok.</td></tr>';
+      return;
+    }
+    body.innerHTML = rows.map(row => {
+      const safe = value => String(value ?? '').replace(/[&<>"']/g, ch =>
+        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+      return `<tr>
+        <td><b>${safe(row.full_name)}</b><small>${safe(row.employee_id)}</small></td>
+        <td>${safe(row.username)}<small>${safe(row.email || '—')}</small></td>
+        <td>${safe(row.department_name || '—')}</td>
+        <td><span class="role-chip role-${safe(row.role).toLowerCase()}">${safe(row.role)}</span></td>
+        <td><span class="status-chip ${row.is_active ? 'status-active' : 'status-inactive'}">${row.is_active ? 'Aktif' : 'Nonaktif'}</span></td>
+        <td><div class="row-actions"><button class="table-action edit" data-edit="${row.id}" type="button">Edit</button>
+        <button class="table-action ${row.is_active ? 'deactivate' : 'activate'}" data-toggle="${row.id}" data-active="${row.is_active}" type="button">${row.is_active ? 'Nonaktifkan' : 'Aktifkan'}</button></div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  async function loadEmployees() {
+    const state = employeeEl('employeeLoadState');
+    state.textContent = 'Memuat data...';
+    const params = new URLSearchParams();
+    const search = employeeEl('employeeSearch').value.trim();
+    const role = employeeEl('employeeRoleFilter').value;
+    const status = employeeEl('employeeStatusFilter').value;
+    if (search) params.set('search', search);
+    if (role) params.set('role', role);
+    if (status) params.set('status', status);
+    try {
+      const result = await apiRequest('/admin/employees' + (params.size ? '?' + params.toString() : ''), authToken);
+      employeeState.rows = Array.isArray(result.data) ? result.data : [];
+      renderEmployees(employeeState.rows);
+      state.textContent = 'Data berhasil dimuat';
+    } catch (error) {
+      state.textContent = 'Gagal memuat data';
+      employeeEl('employeeTableBody').innerHTML =
+        `<tr><td colspan="6" class="table-empty">${String(error.message).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}</td></tr>`;
+    }
+  }
+
+  async function saveEmployee(event) {
+    event.preventDefault();
+    const id = employeeState.editingId;
+    const payload = {
+      employee_id: employeeEl('employeeIdInput').value.trim(),
+      full_name: employeeEl('employeeNameInput').value.trim(),
+      username: employeeEl('employeeUsernameInput').value.trim(),
+      email: employeeEl('employeeEmailInput').value.trim(),
+      department_id: Number(employeeEl('employeeDepartmentInput').value),
+      role: employeeEl('employeeRoleInput').value
+    };
+    if (!id) payload.password = employeeEl('employeePasswordInput').value;
+    const button = employeeEl('saveEmployeeButton');
+    button.disabled = true;
+    button.textContent = 'Menyimpan...';
+    employeeMessage('');
+    try {
+      const result = await apiRequest(id ? '/admin/employees/' + id : '/admin/employees', authToken, {
+        method: id ? 'PUT' : 'POST', body: JSON.stringify(payload)
+      });
+      closeEmployeeModal();
+      await loadEmployees();
+      employeeEl('employeeLoadState').textContent = result.message || 'Data berhasil disimpan';
+    } catch (error) {
+      employeeMessage(error.message, true);
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Simpan Karyawan';
+    }
+  }
+
+  async function toggleEmployee(id, active) {
+    const action = active ? 'menonaktifkan' : 'mengaktifkan';
+    if (!confirm(`Yakin ingin ${action} akun karyawan ini?`)) return;
+    try {
+      const result = await apiRequest('/admin/employees/' + id + '/status', authToken, {
+        method: 'PATCH', body: JSON.stringify({ is_active: !active })
+      });
+      await loadEmployees();
+      employeeEl('employeeLoadState').textContent = result.message || 'Status akun diperbarui';
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   async function verifyToken(token) {
     const response = await fetch(apiBase + '/auth/me', {
       headers: { Authorization: 'Bearer ' + token }
@@ -178,6 +308,7 @@
         throw new Error(data.message || 'Login gagal. Periksa username dan password.');
       }
       sessionStorage.setItem('dss_token', data.token);
+      authToken = data.token;
       passwordInput.value = '';
       await enterDashboard(data.token);
     } catch (error) {
@@ -194,8 +325,33 @@
     button.addEventListener('click', () => openPage(button.dataset.page));
   });
 
+
+  employeeEl('addEmployeeButton').addEventListener('click', () => openEmployeeModal());
+  employeeEl('closeEmployeeModal').addEventListener('click', closeEmployeeModal);
+  employeeEl('cancelEmployeeButton').addEventListener('click', closeEmployeeModal);
+  employeeEl('employeeForm').addEventListener('submit', saveEmployee);
+  employeeEl('employeeSearchButton').addEventListener('click', loadEmployees);
+  employeeEl('employeeSearch').addEventListener('keydown', event => {
+    if (event.key === 'Enter') loadEmployees();
+  });
+  employeeEl('employeeRoleFilter').addEventListener('change', loadEmployees);
+  employeeEl('employeeStatusFilter').addEventListener('change', loadEmployees);
+  employeeEl('employeeModal').addEventListener('click', event => {
+    if (event.target === employeeEl('employeeModal')) closeEmployeeModal();
+  });
+  employeeEl('employeeTableBody').addEventListener('click', event => {
+    const edit = event.target.closest('[data-edit]');
+    const toggle = event.target.closest('[data-toggle]');
+    if (edit) {
+      const row = employeeState.rows.find(item => item.id === Number(edit.dataset.edit));
+      if (row) openEmployeeModal(row);
+    }
+    if (toggle) toggleEmployee(Number(toggle.dataset.toggle), toggle.dataset.active === 'true');
+  });
+
   document.getElementById('logoutButton').addEventListener('click', () => {
     sessionStorage.removeItem('dss_token');
+    authToken = '';
     setView('login');
     showMessage('Anda sudah keluar dari DSS.', true);
   });
@@ -207,6 +363,7 @@
   (async () => {
     if (!apiBase) return showMessage('Konfigurasi server belum tersedia.');
     const token = sessionStorage.getItem('dss_token');
+    authToken = token || '';
     if (!token) return;
     try {
       await enterDashboard(token);
