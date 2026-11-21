@@ -1,4 +1,4 @@
-const CACHE='dss-admin-shell-v3';
+const CACHE='dss-admin-shell-v4';
 const FILES=['./','./index.html','./manifest.json','./assets/css/style.css','./assets/js/config.js','./assets/js/app.js'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)));self.skipWaiting();});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))));self.clients.claim();});
