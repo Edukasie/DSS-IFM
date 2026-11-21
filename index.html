@@ -1,1 +1,108 @@
-<!doctype html><html lang='id'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='theme-color' content='#10243a'><title>DSS | Digital Suggestion System</title><link rel='manifest' href='manifest.json'><link rel='stylesheet' href='assets/css/style.css'></head><body><main class='wrap'><header><div class='logo'>D</div><div><small>MAINTENANCE IMPROVEMENT</small><h1>Digital Suggestion</h1><p>Catat ide. Dokumentasikan improvement.</p></div></header><section class='card'><small>WELCOME BACK</small><h2>Masuk ke DSS</h2><p>Gunakan akun karyawan untuk melanjutkan.</p><form id='loginForm'><label>Username / Employee ID<input id='username' required autocomplete='username' placeholder='Masukkan username'></label><label>Password<input id='password' type='password' required autocomplete='current-password' placeholder='Masukkan password'></label><button>Masuk →</button><div id='message' role='status'></div></form></section><footer>Digital Suggestion & Improvement System · Maintenance</footer></main><script src='assets/js/config.js'></script><script src='assets/js/app.js'></script><script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'))}</script></body></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10243a">
+  <title>DSS | Digital Suggestion System</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <section id="loginView" class="login-shell">
+    <div class="login-brand">
+      <div class="brand-mark">D</div>
+      <div><span>MAINTENANCE IMPROVEMENT</span><h1>Digital Suggestion</h1><p>Catat ide. Dokumentasikan improvement.</p></div>
+    </div>
+    <div class="login-card">
+      <span class="eyebrow">WELCOME BACK</span>
+      <h2>Masuk ke DSS</h2>
+      <p class="muted">Gunakan akun karyawan untuk melanjutkan.</p>
+      <form id="loginForm">
+        <label>Username / Employee ID<input id="username" required autocomplete="username" placeholder="Masukkan username"></label>
+        <label>Password<input id="password" type="password" required autocomplete="current-password" placeholder="Masukkan password"></label>
+        <button id="loginButton" class="primary-btn" type="submit">Masuk <span>→</span></button>
+        <div id="message" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+    <footer>Digital Suggestion &amp; Improvement System · Maintenance</footer>
+  </section>
+
+  <section id="dashboardView" class="app-shell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="side-brand"><div class="brand-mark">D</div><div><b>DSS</b><small>IMPROVEMENT SYSTEM</small></div></div>
+      <div class="side-caption">MENU UTAMA</div>
+      <nav class="side-nav">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
+        <button class="nav-link" data-page="suggestions"><span class="nav-icon">✦</span>Data Suggestion</button>
+        <button class="nav-link" data-page="approvals"><span class="nav-icon">✓</span>Approval</button>
+        <button class="nav-link" data-page="employees"><span class="nav-icon">♙</span>Data Karyawan</button>
+        <button class="nav-link" data-page="departments"><span class="nav-icon">▤</span>Departemen</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-note"><b>Improvement starts here.</b><p>Ide kecil, perubahan besar.</p></div>
+        <button id="logoutButton" class="logout-btn"><span>↪</span> Keluar</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button id="menuToggle" class="menu-toggle" aria-label="Buka menu">☰</button>
+        <div><span class="top-eyebrow">MAINTENANCE / DSS</span><div class="top-title">Digital Suggestion System</div></div>
+        <div class="top-user"><div class="avatar" id="userAvatar">A</div><div class="user-meta"><b id="userName">Administrator</b><small id="userRole">ADMIN</small></div></div>
+      </header>
+
+      <section class="page-content">
+        <div class="welcome-row">
+          <div><span class="eyebrow">ADMINISTRATOR PANEL</span><h1 id="pageTitle">Dashboard</h1><p id="welcomeText">Pantau aktivitas suggestion dan proses improvement Maintenance.</p></div>
+          <div class="date-chip" id="todayLabel">DSS WORKSPACE</div>
+        </div>
+
+        <div id="dashboardPage">
+          <div class="section-heading"><div><h2>Ringkasan Suggestion</h2><p>Ikhtisar data improvement dalam sistem</p></div><span class="live-indicator">● Sistem terhubung</span></div>
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total Suggestion</span><span class="stat-icon blue">✦</span></div><strong>—</strong><small>Menunggu integrasi data</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Menunggu Approval</span><span class="stat-icon amber">◷</span></div><strong>—</strong><small>Menunggu integrasi data</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Disetujui</span><span class="stat-icon green">✓</span></div><strong>—</strong><small>Menunggu integrasi data</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Ditolak</span><span class="stat-icon red">×</span></div><strong>—</strong><small>Menunggu integrasi data</small></article>
+          </div>
+
+          <div class="content-grid">
+            <article class="panel workflow-panel">
+              <div class="panel-heading"><div><h3>Alur Approval</h3><p>Tahapan persetujuan suggestion</p></div><span class="pill">3 TAHAP</span></div>
+              <div class="workflow">
+                <div class="workflow-step"><span class="step-number">01</span><div><b>Leader</b><small>Review awal suggestion</small></div><span class="step-arrow">→</span></div>
+                <div class="workflow-step"><span class="step-number">02</span><div><b>Supervisor</b><small>Evaluasi dan validasi</small></div><span class="step-arrow">→</span></div>
+                <div class="workflow-step"><span class="step-number">03</span><div><b>Manager</b><small>Persetujuan akhir</small></div><span class="step-check">✓</span></div>
+              </div>
+            </article>
+            <article class="panel quick-panel">
+              <div class="panel-heading"><div><h3>Akses Cepat</h3><p>Kelola sistem DSS</p></div></div>
+              <button class="quick-action" data-page="employees"><span class="quick-icon">♙</span><span><b>Kelola Karyawan</b><small>Tambah dan atur akun pengguna</small></span><i>→</i></button>
+              <button class="quick-action" data-page="suggestions"><span class="quick-icon">✦</span><span><b>Lihat Suggestion</b><small>Pantau usulan improvement</small></span><i>→</i></button>
+              <button class="quick-action" data-page="approvals"><span class="quick-icon">✓</span><span><b>Monitor Approval</b><small>Pantau alur persetujuan</small></span><i>→</i></button>
+            </article>
+          </div>
+          <div class="notice"><span>i</span><div><b>Dashboard tahap awal</b><p>Autentikasi sudah aktif. Angka ringkasan dan daftar suggestion akan ditampilkan setelah endpoint data dashboard selesai dibuat di backend.</p></div></div>
+        </div>
+
+        <div id="placeholderPage" class="panel placeholder-panel" hidden>
+          <div class="placeholder-icon">◈</div>
+          <span class="eyebrow">MODUL DSS</span>
+          <h2 id="placeholderTitle">Modul</h2>
+          <p id="placeholderDescription">Modul ini sedang disiapkan.</p>
+          <span class="coming-soon">DALAM PENGEMBANGAN</span>
+        </div>
+      </section>
+      <footer class="app-footer">© 2026 Digital Suggestion &amp; Improvement System <span>Maintenance Department</span></footer>
+    </main>
+  </section>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+    }
+  </script>
+</body>
+</html>

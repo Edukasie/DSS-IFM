@@ -1,19 +1,17 @@
-DSS Frontend API Integration
+DSS Admin Dashboard - Frontend replacement
 
-Replace these files in the DSS-Frontend GitHub repository:
-1. assets/js/config.js
-2. assets/js/app.js
-3. service-worker.js
+Replace these files in repository edusinggih/DSS-Frontend:
+- index.html
+- assets/css/style.css
+- assets/js/config.js
+- assets/js/app.js
+- service-worker.js
 
-Backend API:
-https://singgihedu.pythonanywhere.com/api
+The dashboard shell:
+- Reuses the existing PythonAnywhere API login and /auth/me token verification.
+- Displays the Admin dashboard after a verified ADMIN login.
+- Uses sessionStorage for the token.
+- Provides navigation placeholders for Suggestion, Approval, Employees, and Departments.
+- Shows dashes instead of fabricated KPI counts because dashboard data endpoints are not implemented yet.
 
-After committing the files:
-- Wait for GitHub Pages deployment.
-- Open the site in a private/incognito window or hard refresh.
-- Test with the Admin account.
-- Do not share the password or token.
-
-Important:
-This version verifies login and identity, but does not yet redirect to a dashboard.
-The dashboard and role-based pages are the next development stage.
+After commit, wait for GitHub Pages deployment and hard-refresh / use a private window.
