@@ -48,6 +48,93 @@
     document.getElementById('sidebar').classList.remove('sidebar-open');
   }
 
+  async function apiRequest(path, token, options = {}) {
+    const response = await fetch(apiBase + path, {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        Authorization: 'Bearer ' + token,
+        ...(options.body ? { 'Content-Type': 'application/json' } : {})
+      }
+    });
+    const data = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+      sessionStorage.removeItem('dss_token');
+      setView('login');
+      throw new Error('Sesi berakhir. Silakan login kembali.');
+    }
+    if (!response.ok || data.success === false) {
+      throw new Error(data.message || 'Permintaan ke server gagal.');
+    }
+    return data;
+  }
+
+  async function loadDashboard(token) {
+    const statsGrid = document.querySelector('.stats-grid');
+    const cards = [...statsGrid.querySelectorAll('.stat-card')];
+    const loadingText = 'Memuat data...';
+    cards.forEach(card => {
+      const value = card.querySelector('strong');
+      const note = card.querySelector('small');
+      if (value) value.textContent = '…';
+      if (note) note.textContent = loadingText;
+    });
+
+    try {
+      const result = await apiRequest('/admin/dashboard', token);
+      const data = result.data || {};
+      const values = [
+        ['Total Suggestion', data.total_suggestion ?? 0, 'Seluruh suggestion terdaftar'],
+        ['Menunggu Approval', data.waiting_approval ?? 0, 'Suggestion dalam antrean persetujuan'],
+        ['Disetujui', data.approved ?? 0, 'Suggestion berstatus approved'],
+        ['Ditolak', data.rejected ?? 0, 'Suggestion berstatus rejected']
+      ];
+
+      values.forEach((item, index) => {
+        const card = cards[index];
+        if (!card) return;
+        const value = card.querySelector('strong');
+        const label = card.querySelector('.stat-top span:first-child');
+        const note = card.querySelector('small');
+        if (label) label.textContent = item[0];
+        if (value) value.textContent = Number(item[1]).toLocaleString('id-ID');
+        if (note) note.textContent = item[2];
+      });
+
+      let employeeCard = statsGrid.querySelector('[data-stat="active-employees"]');
+      if (!employeeCard) {
+        employeeCard = document.createElement('article');
+        employeeCard.className = 'stat-card';
+        employeeCard.dataset.stat = 'active-employees';
+        employeeCard.innerHTML = `
+          <div class="stat-top"><span>Karyawan Aktif</span><span class="stat-icon green">♙</span></div>
+          <strong>0</strong>
+          <small>Akun karyawan yang aktif</small>`;
+        statsGrid.appendChild(employeeCard);
+      }
+      employeeCard.querySelector('strong').textContent =
+        Number(data.active_employees ?? 0).toLocaleString('id-ID');
+      employeeCard.querySelector('small').textContent = 'Akun karyawan yang aktif';
+
+      const notice = document.querySelector('.notice');
+      if (notice) {
+        notice.querySelector('b').textContent = 'Dashboard terhubung';
+        notice.querySelector('p').textContent =
+          'Statistik berhasil dimuat langsung dari database DSS.';
+      }
+    } catch (error) {
+      cards.forEach(card => {
+        const note = card.querySelector('small');
+        if (note) note.textContent = 'Gagal memuat data';
+      });
+      const notice = document.querySelector('.notice');
+      if (notice) {
+        notice.querySelector('b').textContent = 'Data dashboard belum termuat';
+        notice.querySelector('p').textContent = error.message;
+      }
+    }
+  }
+
   async function verifyToken(token) {
     const response = await fetch(apiBase + '/auth/me', {
       headers: { Authorization: 'Bearer ' + token }
@@ -67,6 +154,7 @@
     renderUser(user);
     setView('dashboard');
     openPage('dashboard');
+    await loadDashboard(token);
   }
 
   form.addEventListener('submit', async event => {
