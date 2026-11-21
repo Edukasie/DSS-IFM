@@ -1,0 +1,40 @@
+DSS EduKasie Branding Patch
+
+1) Upload assets/images/edukasie-logo.jpg to the DSS-Frontend repository at the same path.
+
+2) In index.html, locate the sidebar brand block:
+   <div class="side-brand"> ... </div>
+
+   Replace that block with:
+   <div class="side-brand">
+     <img class="edukasie-logo" src="assets/images/edukasie-logo.jpg" alt="EduKasie">
+     <div class="side-brand-label">
+       <b>DSS</b>
+       <small>IMPROVEMENT SYSTEM</small>
+     </div>
+   </div>
+
+3) In index.html, replace the existing app footer:
+   <footer class="app-footer">...</footer>
+
+   With:
+   <footer class="app-footer">
+     <div class="footer-motto">The Power of Design</div>
+     <div class="footer-prayer">Allohumusta'an</div>
+     <div class="footer-copyright">© 2026 Edukasie-Maintenance. All rights reserved.</div>
+   </footer>
+
+4) Add the following CSS at the END of assets/css/style.css:
+   .side-brand{align-items:center;gap:10px;flex-wrap:wrap}
+   .edukasie-logo{display:block;width:100%;max-width:205px;height:auto;object-fit:contain;background:#fff;border-radius:10px;padding:5px}
+   .side-brand-label{padding:3px 2px}
+   .footer-motto{font-weight:700;color:#31566b;text-align:center;font-size:12px;letter-spacing:.3px}
+   .footer-prayer{font-style:italic;color:#147d6c;text-align:center;font-size:11px;margin-top:3px}
+   .footer-copyright{color:#8a97a4;text-align:center;font-size:10px;margin-top:7px}
+   .app-footer{display:flex;flex-direction:column;align-items:center;gap:0}
+   @media(max-width:700px){.edukasie-logo{max-width:175px}.app-footer{padding:15px}}
+
+5) Increment the service worker cache name in service-worker.js, e.g. dss-admin-shell-v4.
+   Add './assets/images/edukasie-logo.jpg' to the FILES array so the logo is cached.
+
+6) Commit the changes. Then open the site and hard refresh (Ctrl+Shift+R).
