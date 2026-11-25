@@ -1,0 +1,314 @@
+/* DSS KPI page - additive styles only */
+.kpi-toolbar { display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.kpi-toolbar .employee-filters { display:flex; align-items:center; flex-wrap:wrap; gap:10px; }
+.kpi-toolbar select { min-width:130px; }
+.kpi-summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+.kpi-summary > div { min-width:0; }
+.kpi-summary b { display:block; font-size:25px; line-height:1.25; color:#10243a; }
+.kpi-summary span { display:block; margin-top:5px; color:#718096; font-size:12px; }
+.kpi-employee-id { display:block; color:#8290a3; font-size:11px; margin-top:3px; }
+.kpi-trend { display:grid; gap:12px; padding:4px 0; }
+.kpi-trend-row { display:grid; grid-template-columns:110px minmax(80px,1fr) 90px; align-items:center; gap:12px; font-size:12px; color:#52647a; }
+.kpi-trend-row > b { text-align:right; color:#10243a; }
+.kpi-trend-track { height:10px; background:#edf2f7; border-radius:999px; overflow:hidden; }
+.kpi-trend-track i { display:block; height:100%; background:#15947f; border-radius:999px; }
+.kpi-trend-panel { margin-top:16px; }
+@media (max-width:760px) {
+  .kpi-toolbar { align-items:flex-start; flex-direction:column; }
+  .kpi-summary { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .kpi-trend-row { grid-template-columns:82px minmax(50px,1fr) 65px; gap:8px; }
+}
+
+
+/* KPI Leaderboard podium v26 */
+.kpi-podium-section{margin:4px 0 18px;padding:20px 22px 18px;background:linear-gradient(145deg,#f9fcfd,#eef5f7);border:1px solid #e2ebef;border-radius:16px;overflow:hidden}
+.kpi-podium-heading{margin-bottom:14px}.kpi-podium-heading h3{font:800 19px Manrope;color:#10243a;margin:5px 0 4px}.kpi-podium-heading p{font-size:11px;color:#718096;margin:0}
+.kpi-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:14px;max-width:760px;margin:0 auto;min-height:250px}
+.kpi-podium-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;min-width:0;padding:14px 10px 0;border-radius:14px 14px 0 0;animation:kpiPodiumRise .55s ease both}
+.kpi-podium-card.rank-1{order:2;min-height:238px;background:linear-gradient(180deg,#fff8df,#f7e8b4);border:1px solid #ead69a;z-index:2}
+.kpi-podium-card.rank-2{order:1;min-height:202px;background:linear-gradient(180deg,#f8fafc,#e5ebf1);border:1px solid #d8e0e8;animation-delay:.08s}
+.kpi-podium-card.rank-3{order:3;min-height:180px;background:linear-gradient(180deg,#fff7f1,#f2dfd0);border:1px solid #e8cbb5;animation-delay:.16s}
+.kpi-podium-medal{font-size:26px;line-height:1.2;margin-bottom:8px}.kpi-podium-avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#173b59;color:#fff;border:3px solid #fff;box-shadow:0 4px 14px #10243a20;font:800 18px Manrope;margin-bottom:8px}
+.rank-1 .kpi-podium-avatar{width:68px;height:68px;background:#b58a25}.rank-3 .kpi-podium-avatar{background:#986443}
+.kpi-podium-name{max-width:100%;font-size:12px;color:#183047;overflow-wrap:anywhere}.kpi-podium-department{font-size:10px;color:#718096;margin-top:3px;min-height:14px}.kpi-podium-card>strong{font:800 19px Manrope;color:#10243a;margin:8px 0 10px}.kpi-podium-card>strong small{font:600 10px 'DM Sans',sans-serif;color:#718096}
+.kpi-podium-base{width:100%;padding:7px 0;background:#173b59;color:white;font:800 14px Manrope;border-radius:8px 8px 0 0}.rank-1 .kpi-podium-base{background:#b58a25}.rank-3 .kpi-podium-base{background:#986443}
+.kpi-podium-empty{grid-column:1/-1;text-align:center;color:#718096;font-size:12px;padding:45px 12px;background:#fff;border:1px dashed #dbe4eb;border-radius:12px}
+@keyframes kpiPodiumRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.kpi-podium-section{padding:16px 10px}.kpi-podium{gap:6px;min-height:205px}.kpi-podium-card.rank-1{min-height:200px}.kpi-podium-card.rank-2{min-height:176px}.kpi-podium-card.rank-3{min-height:158px}.kpi-podium-avatar{width:44px;height:44px;font-size:14px}.rank-1 .kpi-podium-avatar{width:52px;height:52px}.kpi-podium-name{font-size:10px}.kpi-podium-department{font-size:9px}.kpi-podium-card>strong{font-size:15px}.kpi-podium-medal{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.kpi-podium-card{animation:none}}
+
+/* Dashboard KPI + profile image */
+.dashboard-kpi{margin:28px 0}.dashboard-kpi #kpiPage{display:block!important}.profile-trigger{border:0;background:transparent;padding:0;cursor:pointer}.avatar.has-photo{background-size:cover;background-position:center;color:transparent}.profile-modal{max-width:460px}.profile-preview-wrap{display:flex;justify-content:center;padding:18px}.profile-preview-wrap img,.profile-initial-preview{width:116px;height:116px;border-radius:50%;object-fit:cover}.profile-initial-preview{display:grid;place-items:center;background:#e9eef7;color:#234;font-size:42px;font-weight:700}.kpi-podium-avatar img,.kpi-name-cell img,.kpi-table-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover}.kpi-name-cell{display:flex;align-items:center;gap:10px}.kpi-table-avatar{display:grid;place-items:center;background:#edf1f7;font-weight:700}.kpi-employee-id{display:block;margin-left:52px}.dashboard-kpi .kpi-podium-avatar img{width:64px;height:64px}
+
+/* DSS reporting and department performance */
+.kpi-toolbar .employee-filters { flex-wrap: wrap; }
+.kpi-department-performance { display: grid; gap: 12px; padding: 4px 0; }
+.kpi-department-performance .kpi-trend-row { display: grid; grid-template-columns: minmax(120px, 180px) minmax(100px, 1fr) auto; align-items: center; gap: 12px; }
+.kpi-department-performance .kpi-trend-row small { grid-column: 2 / 4; color: #718096; margin-top: -8px; }
+#exportKpiExcel, #exportKpiPdf { white-space: nowrap; }
+@media (max-width: 720px) {
+  .kpi-department-performance .kpi-trend-row { grid-template-columns: 1fr auto; gap: 6px 10px; }
+  .kpi-department-performance .kpi-trend-row .kpi-trend-track { grid-column: 1 / -1; grid-row: 2; }
+  .kpi-department-performance .kpi-trend-row small { grid-column: 1 / -1; margin-top: 0; }
+}
+
+
+
+/* ==========================================================
+   DSS KPI PAGE — COMPACT TWO-COLUMN LAYOUT v31
+   The supplied index keeps KPI as a separate nav page (#kpiPage),
+   so these rules compact that page without moving it into Dashboard.
+   ========================================================== */
+@media (min-width: 701px) {
+  #kpiPage:not([hidden]) {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 11px;
+    align-items: stretch;
+    margin-top: 2px;
+  }
+
+  #kpiPage > .kpi-toolbar,
+  #kpiPage > .kpi-summary {
+    grid-column: 1 / -1;
+    min-width: 0;
+    margin: 0;
+  }
+
+  #kpiPage > .kpi-toolbar {
+    padding: 9px 12px;
+    gap: 10px;
+  }
+
+  #kpiPage .employee-filters {
+    gap: 7px;
+  }
+
+  #kpiPage .employee-filters select,
+  #kpiPage .employee-filters button {
+    min-height: 32px;
+    height: 32px;
+    padding: 0 9px;
+    font-size: 10px;
+  }
+
+  #kpiPage > .kpi-summary {
+    gap: 9px;
+  }
+
+  #kpiPage > .kpi-summary > div {
+    padding: 9px 13px;
+    border-radius: 10px;
+  }
+
+  #kpiPage > .kpi-summary b {
+    font-size: 19px;
+    line-height: 1.15;
+  }
+
+  #kpiPage > .kpi-summary span {
+    font-size: 9px;
+    margin-top: 3px;
+  }
+
+  #kpiPage > .kpi-podium-section {
+    grid-column: span 5;
+    min-width: 0;
+    margin: 0;
+    padding: 13px;
+    border-radius: 12px;
+  }
+
+  #kpiPage .kpi-podium-heading {
+    margin-bottom: 7px;
+  }
+
+  #kpiPage .kpi-podium-heading h3 {
+    font-size: 14px;
+    margin: 3px 0;
+  }
+
+  #kpiPage .kpi-podium-heading p {
+    font-size: 9px;
+  }
+
+  #kpiPage .kpi-podium {
+    min-height: 178px;
+    gap: 7px;
+  }
+
+  #kpiPage .kpi-podium-card {
+    min-height: 145px;
+    padding: 9px 6px 0;
+  }
+
+  #kpiPage .kpi-podium-card.rank-1 {
+    min-height: 166px;
+  }
+
+  #kpiPage .kpi-podium-card.rank-2 {
+    min-height: 151px;
+  }
+
+  #kpiPage .kpi-podium-card.rank-3 {
+    min-height: 137px;
+  }
+
+  #kpiPage .kpi-podium-medal {
+    font-size: 19px;
+    margin-bottom: 4px;
+  }
+
+  #kpiPage .kpi-podium-avatar {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 4px;
+  }
+
+  #kpiPage .kpi-podium-card.rank-1 .kpi-podium-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  #kpiPage .kpi-podium-name {
+    font-size: 9px;
+  }
+
+  #kpiPage .kpi-podium-department {
+    font-size: 8px;
+  }
+
+  #kpiPage .kpi-podium-card > strong {
+    font-size: 13px;
+    margin: 5px 0 7px;
+  }
+
+  #kpiPage > .employee-table-panel:not(.kpi-trend-panel) {
+    grid-column: span 7;
+    min-width: 0;
+    padding: 12px 14px;
+    margin: 0;
+  }
+
+  #kpiPage .employee-table-heading {
+    margin-bottom: 7px;
+  }
+
+  #kpiPage .employee-table-heading h3 {
+    font-size: 13px;
+  }
+
+  #kpiPage .employee-table-heading p {
+    font-size: 9px;
+  }
+
+  #kpiPage .employee-table th {
+    padding: 7px 8px;
+    font-size: 8px;
+  }
+
+  #kpiPage .employee-table td {
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+
+  #kpiPage > .kpi-trend-panel {
+    grid-column: span 6;
+    min-width: 0;
+    padding: 11px 13px;
+    margin: 0;
+  }
+
+  #kpiPage .kpi-trend {
+    gap: 7px;
+  }
+
+  #kpiPage .kpi-trend-row {
+    grid-template-columns: 82px minmax(50px, 1fr) 62px;
+    gap: 8px;
+    font-size: 9px;
+  }
+
+  #kpiPage .kpi-trend-track {
+    height: 7px;
+  }
+
+  #kpiPage .kpi-department-performance {
+    gap: 7px;
+  }
+
+  #kpiPage .kpi-department-performance .kpi-trend-row {
+    grid-template-columns: minmax(90px, 150px) minmax(60px, 1fr) auto;
+    gap: 8px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 1050px) and (min-width: 701px) {
+  #kpiPage:not([hidden]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #kpiPage > .kpi-toolbar,
+  #kpiPage > .kpi-summary,
+  #kpiPage > .kpi-podium-section,
+  #kpiPage > .employee-table-panel:not(.kpi-trend-panel),
+  #kpiPage > .kpi-trend-panel {
+    grid-column: 1 / -1;
+  }
+  #kpiPage .kpi-podium {
+    max-width: 520px;
+  }
+  #kpiPage .employee-table {
+    min-width: 650px;
+  }
+}
+
+@media (max-width: 700px) {
+  #kpiPage:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+  #kpiPage > * {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  #kpiPage > .kpi-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  #kpiPage .employee-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+  #kpiPage .employee-filters select,
+  #kpiPage .employee-filters button {
+    width: 100%;
+    min-width: 0;
+  }
+  #kpiPage > .kpi-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  #kpiPage .kpi-podium {
+    min-height: 160px;
+    gap: 6px;
+  }
+  #kpiPage .kpi-podium-card.rank-1 {
+    min-height: 145px;
+  }
+  #kpiPage .kpi-podium-card.rank-2 {
+    min-height: 132px;
+  }
+  #kpiPage .kpi-podium-card.rank-3 {
+    min-height: 120px;
+  }
+  #kpiPage .employee-table {
+    min-width: 650px;
+  }
+  #kpiPage > .employee-table-panel,
+  #kpiPage > .kpi-trend-panel {
+    overflow: hidden;
+  }
+}
+

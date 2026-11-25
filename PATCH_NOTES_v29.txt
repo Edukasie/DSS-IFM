@@ -1,0 +1,9 @@
+DSS v29 - Profile Photo Display & Click Fix
+
+- Cache-bust profile image URLs using the stored filename so updated employee photos appear immediately.
+- KPI podium and ranking table now show a fallback initial if an image URL fails.
+- Profile modal opens from the avatar and the user name/role area in the top-right.
+- Existing admin employee photo upload and self-service upload routes are retained.
+
+Install by replacing DSS-Backend and DSS-Frontend with the folders in this archive.
+Local testing is still required before production deployment.

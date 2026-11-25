@@ -1,0 +1,13 @@
+DSS v30 — Admin Photo Upload Explicit Action
+
+Perbaikan:
+- Menambahkan tombol Upload Foto ke Server terpisah pada modal Edit Karyawan.
+- Status upload terlihat langsung (mengunggah/berhasil/gagal beserta pesan backend).
+- Upload foto menggunakan multipart/form-data dan Bearer token.
+- Backend menyediakan alias endpoint /api/admin/users/<id>/photo selain /api/admin/employees/<id>/photo.
+- File disimpan ke instance/profile_photos dan kolom users.profile_photo diperbarui.
+- Jika update database gagal, file baru dibersihkan agar tidak menjadi orphan.
+- Setelah upload berhasil, daftar karyawan dan Dashboard KPI dimuat ulang.
+
+Uji: kompilasi Python dan pemeriksaan sintaks JavaScript. Runtime upload harus diuji pada database lokal kang.
+Backup sebelum replace. Jangan deploy online sebelum verifikasi.

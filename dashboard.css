@@ -1,0 +1,91 @@
+/* DSS dashboard v31 — padat, muat dalam satu layar (hanya aktif di halaman Dashboard) */
+.page-content.is-dashboard{width:min(1720px,100%);padding:16px 22px 14px;display:grid;gap:12px;align-content:stretch;
+  min-height:calc(100vh - 76px - 56px);
+  grid-template-columns:minmax(0,4fr) minmax(0,5fr) minmax(0,3.2fr);
+  grid-template-rows:auto auto auto repeat(3,minmax(150px,1fr)) auto;
+  grid-template-areas:"head head head" "stats stats stats" "tool tool sum" "pod rank dept" "pod rank flow" "trend rank quick" "note note note"}
+.is-dashboard #dashboardPage:not([hidden]),.is-dashboard #kpiPage:not([hidden]),.is-dashboard .content-grid{display:contents}
+.is-dashboard .panel{padding:14px 16px;min-height:0;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 2px #10243a0a}
+
+/* judul halaman satu baris */
+.is-dashboard .welcome-row{grid-area:head;margin:0;align-items:flex-end}
+.is-dashboard .welcome-row .eyebrow{display:none}
+.is-dashboard .welcome-row h1{font-size:22px;margin:0 0 2px}
+.is-dashboard .welcome-row p{font-size:12px}
+.is-dashboard .section-heading{display:none}
+
+/* kartu statistik */
+.is-dashboard .stats-grid{grid-area:stats;margin:0;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.is-dashboard .stat-card{min-height:0;padding:12px 16px;border-left:4px solid var(--c,#3674bd);box-shadow:0 1px 2px #10243a0a}
+.is-dashboard .stat-card:nth-child(1){--c:#3674bd}.is-dashboard .stat-card:nth-child(2){--c:#d9a02b}
+.is-dashboard .stat-card:nth-child(3){--c:#27875e}.is-dashboard .stat-card:nth-child(4){--c:#c75d51}.is-dashboard .stat-card:nth-child(5){--c:#147d6c}
+.is-dashboard .stat-card strong{font-size:26px;margin:6px 0 1px}
+.is-dashboard .stat-card small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* filter + ringkasan KPI */
+.is-dashboard .kpi-toolbar{grid-area:tool;padding:10px 14px;flex-direction:row;align-items:center;flex-wrap:wrap}
+.is-dashboard .kpi-toolbar .employee-filters{gap:8px}
+.is-dashboard .kpi-toolbar select,.is-dashboard .kpi-toolbar .secondary-btn{height:34px;min-width:0;padding-top:0;padding-bottom:0;font-size:12px}
+.is-dashboard .kpi-summary{grid-area:sum;margin:0;gap:8px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.is-dashboard .kpi-summary>div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;display:flex;flex-direction:column;justify-content:center}
+.is-dashboard .kpi-summary b{font:800 20px Manrope;line-height:1.1}
+.is-dashboard .kpi-summary span{font-size:10px;margin-top:3px;line-height:1.2}
+
+/* podium */
+.is-dashboard .kpi-podium-section{grid-area:pod;margin:0;padding:14px 16px;display:flex;flex-direction:column;min-height:0;box-shadow:0 1px 2px #10243a0a}
+.is-dashboard .kpi-podium-heading{margin-bottom:8px}
+.is-dashboard .kpi-podium-heading .eyebrow{display:none}
+.is-dashboard .kpi-podium-heading h3{font-size:16px;margin:0 0 2px}
+.is-dashboard .kpi-podium{flex:1;min-height:0;max-width:none;width:100%;gap:10px;margin:0}
+.is-dashboard .kpi-podium-card{padding:10px 8px 0}
+.is-dashboard .kpi-podium-card.rank-1{min-height:0;height:100%}
+.is-dashboard .kpi-podium-card.rank-2{min-height:0;height:82%}
+.is-dashboard .kpi-podium-card.rank-3{min-height:0;height:70%}
+.is-dashboard .kpi-podium-medal{font-size:22px;margin-bottom:4px}
+.is-dashboard .kpi-podium-avatar{width:48px;height:48px;margin-bottom:6px}
+.is-dashboard .rank-1 .kpi-podium-avatar{width:58px;height:58px}
+.is-dashboard .kpi-podium-avatar img{width:100%;height:100%;border-radius:50%}
+.is-dashboard .kpi-podium-card>strong{font-size:17px;margin:4px 0 8px}
+
+/* ranking */
+.is-dashboard .dash-rank{grid-area:rank}
+.is-dashboard .dash-rank .employee-table-heading{margin-bottom:8px}
+.is-dashboard .dash-rank .table-wrap{flex:1;min-height:0;overflow:auto}
+.is-dashboard .dash-rank thead th{position:sticky;top:0;z-index:1;background:#f6f9fb}
+.is-dashboard .dash-rank th,.is-dashboard .dash-rank td{padding:7px 10px;font-size:12px}
+.is-dashboard .dash-rank .kpi-name-cell img,.is-dashboard .dash-rank .kpi-table-avatar{width:30px;height:30px}
+.is-dashboard .dash-rank .kpi-employee-id{margin-left:40px;margin-top:1px}
+
+/* tren + departemen */
+.is-dashboard .dash-trend{grid-area:trend;margin:0}
+.is-dashboard .dash-dept{grid-area:dept;margin:0}
+.is-dashboard .dash-trend .employee-table-heading p,.is-dashboard .dash-dept .employee-table-heading p{display:none}
+.is-dashboard .dash-trend .employee-table-heading,.is-dashboard .dash-dept .employee-table-heading{margin-bottom:8px}
+.is-dashboard .kpi-trend,.is-dashboard .kpi-department-performance{flex:1;min-height:0;overflow:auto;gap:10px;align-content:start}
+.is-dashboard .dash-dept .kpi-trend-row{grid-template-columns:minmax(70px,110px) minmax(60px,1fr) auto}
+.is-dashboard .kpi-trend-row{grid-template-columns:90px minmax(60px,1fr) 70px}
+
+/* alur approval + akses cepat */
+.is-dashboard .workflow-panel{grid-area:flow}.is-dashboard .quick-panel{grid-area:quick}
+.is-dashboard .panel-heading{margin-bottom:6px}.is-dashboard .panel-heading p{display:none}
+.is-dashboard .workflow{margin-top:0;flex:1;min-height:0;overflow:auto}
+.is-dashboard .workflow-step{padding:7px 2px}
+.is-dashboard .step-number{width:28px;height:28px;border-radius:8px}
+.is-dashboard .quick-action{padding:7px 2px;cursor:pointer}
+.is-dashboard .quick-action:first-of-type{margin-top:0}
+.is-dashboard .quick-icon{width:28px;height:28px}
+.is-dashboard .quick-panel{overflow:auto}
+
+/* catatan sistem: satu baris tipis */
+.is-dashboard .notice{grid-area:note;margin:0;padding:7px 12px;align-items:center}
+.is-dashboard .notice p{display:inline;margin:0 0 0 8px}
+.is-dashboard .notice>div{display:flex;align-items:baseline;flex-wrap:wrap}
+
+/* layar kecil: kembali menumpuk satu kolom */
+@media(max-width:1180px){
+  .page-content.is-dashboard{min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:none;
+    grid-template-areas:"head" "stats" "tool" "sum" "pod" "rank" "dept" "flow" "quick" "trend" "note"}
+  .is-dashboard .kpi-podium-section{min-height:320px}
+  .is-dashboard .dash-rank .table-wrap{max-height:420px}
+  .is-dashboard .panel{overflow:visible}
+}

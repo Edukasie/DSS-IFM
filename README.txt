@@ -1,17 +1,15 @@
-DSS Admin Dashboard - Frontend replacement
+DSS Smart Lamp — pendant follows the pull cord
 
-Replace these files in repository edusinggih/DSS-Frontend:
-- index.html
-- assets/css/style.css
-- assets/js/config.js
-- assets/js/app.js
-- service-worker.js
+Fix:
+- The pull cord endpoint is aligned with the pendant's resting position.
+- The pendant now follows the same X/Y movement as the SVG cord.
+- Existing multidirectional pull and spring-return behavior is retained.
+- Includes the synchronized login logo sizing CSS.
 
-The dashboard shell:
-- Reuses the existing PythonAnywhere API login and /auth/me token verification.
-- Displays the Admin dashboard after a verified ADMIN login.
-- Uses sessionStorage for the token.
-- Provides navigation placeholders for Suggestion, Approval, Employees, and Departments.
-- Shows dashes instead of fabricated KPI counts because dashboard data endpoints are not implemented yet.
+Install:
+1. Back up assets/js/app.js and assets/css/style.css.
+2. Extract this ZIP into the DSS frontend root folder.
+3. Allow replacement of both files, keeping their folder paths.
+4. Hard refresh the browser with Ctrl+F5.
 
-After commit, wait for GitHub Pages deployment and hard-refresh / use a private window.
+Only app.js and style.css are included.

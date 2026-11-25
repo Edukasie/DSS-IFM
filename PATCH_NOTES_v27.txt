@@ -1,0 +1,20 @@
+DSS v27 - Dashboard KPI + Profile Photo
+
+FRONTEND
+- KPI leaderboard dipindahkan ke Dashboard; menu KPI Suggestion dihapus.
+- Ranking global seluruh departemen untuk semua pengguna.
+- Filter periode All Time/Bulanan/Tahunan dipertahankan.
+- Avatar foto profil ditampilkan pada topbar, podium, dan ranking.
+- Pengguna dapat mengunggah foto profil sendiri melalui tombol avatar.
+
+BACKEND
+- Endpoint KPI read-only mengembalikan ranking global untuk seluruh pengguna login.
+- Migrasi menambah users.profile_photo secara non-destruktif.
+- POST /api/profile/photo memvalidasi sesi, MIME, signature gambar, dan ukuran maksimum 2 MB.
+- GET /api/profile/photo/<user_id> menyajikan foto profil.
+- /auth/me dan /admin/employees menyertakan profile_photo_url.
+
+PENTING
+- Patch belum dideploy. Jalankan lokal dan uji sebelum deployment.
+- Database lokal akan mendapat kolom baru otomatis saat backend start.
+- Foto disimpan pada instance/profile_photos; pada PythonAnywhere pastikan folder instance persisten dan dapat ditulis.

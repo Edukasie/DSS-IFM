@@ -1,0 +1,16 @@
+DSS KPI Leaderboard Patch v26
+
+Perubahan:
+- Menambahkan podium Top 3 pada halaman KPI.
+- Peringkat otomatis mengikuti data leaderboard dari API dan filter periode aktif.
+- Avatar inisial otomatis sebagai fallback sementara; field foto karyawan belum tersedia pada schema users saat ini.
+- Ranking tabel dan tren poin tetap dipertahankan.
+- Service Worker cache dinaikkan ke v26.
+
+File replace:
+- DSS-Frontend/index.html
+- DSS-Frontend/assets/js/app.js
+- DSS-Frontend/assets/css/kpi.css
+- DSS-Frontend/service-worker.js
+
+Catatan: Foto profil asli belum diimplementasikan karena backend/schema saat ini belum memiliki kolom atau endpoint foto karyawan. Tidak ada perubahan database atau backend dalam patch ini.

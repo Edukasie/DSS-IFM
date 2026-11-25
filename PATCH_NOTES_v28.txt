@@ -1,0 +1,16 @@
+DSS v28 — Admin Employee Profile Photo
+
+Tambahan:
+- Admin dapat mengunggah/mengganti foto profil melalui Data Karyawan > Tambah/Edit Karyawan.
+- Upload foto dilakukan setelah data karyawan tersimpan.
+- Validasi backend: JPG/PNG/WebP, signature file, maksimal 2 MB.
+- Foto profil ditampilkan pada daftar Data Karyawan; jika kosong tampil inisial.
+- User tetap dapat mengubah foto profil sendiri melalui tombol profil di topbar (fitur v27).
+
+File yang berubah:
+DSS-Backend/app/admin.py
+DSS-Frontend/index.html
+DSS-Frontend/assets/js/app.js
+DSS-Frontend/assets/css/style.css
+
+Catatan: backup project sebelum replace. Uji lokal terlebih dahulu. Tidak ada perubahan deployment.

@@ -1,0 +1,129 @@
+/* DSS dashboard v32 — satu layar, elegan, beranimasi. Aktif hanya saat #dashboardView .page-content.is-dashboard */
+#dashboardView .page-content.is-dashboard{--navy:#10243a;--teal:#147d6c;--ink:#1b2c3e;--mut:#6f8296;--line:#e3eaf0;
+  --card:0 1px 2px #10243a0d,0 12px 28px -16px #10243a2e;--ease:cubic-bezier(.2,.7,.2,1);
+  width:100%;max-width:none;margin:0;padding:18px clamp(18px,2vw,34px) 16px;display:grid;gap:12px;align-content:stretch;
+  min-height:calc(100vh - 64px - 64px);
+  grid-template-columns:minmax(0,4fr) minmax(0,5.2fr) minmax(0,3.2fr);
+  grid-template-rows:auto auto auto repeat(3,minmax(150px,1fr)) auto;
+  grid-template-areas:"head head head" "stats stats stats" "tool tool sum" "pod rank dept" "pod rank flow" "trend rank quick" "note note note";
+  background:radial-gradient(900px 380px at 100% -80px,#147d6c14,transparent 70%),radial-gradient(700px 320px at 0 0,#3674bd10,transparent 70%)}
+#dashboardView .page-content.is-dashboard #dashboardPage:not([hidden]),#dashboardView .page-content.is-dashboard #kpiPage:not([hidden]),#dashboardView .page-content.is-dashboard .content-grid{display:contents}
+#dashboardView .page-content.is-dashboard .panel{padding:14px 16px;min-height:0;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;box-shadow:var(--card)}
+#dashboardView .page-content.is-dashboard .panel h3,#dashboardView .page-content.is-dashboard .panel-heading h3,#dashboardView .page-content.is-dashboard .employee-table-heading h3{font:800 14px Manrope;color:var(--navy);margin:0}
+
+/* header */
+#dashboardView .page-content.is-dashboard .welcome-row{grid-area:head;margin:0;align-items:flex-end}
+#dashboardView .page-content.is-dashboard .welcome-row .eyebrow,#dashboardView .page-content.is-dashboard .section-heading,#dashboardView .page-content.is-dashboard .kpi-podium-heading .eyebrow{display:none}
+#dashboardView .page-content.is-dashboard .welcome-row h1{font:800 26px Manrope;letter-spacing:-.4px;margin:0 0 3px;color:var(--navy)}
+#dashboardView .page-content.is-dashboard .welcome-row p{font-size:12.5px;color:var(--mut)}
+#dashboardView .page-content.is-dashboard .date-chip{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;font-size:11.5px;box-shadow:var(--card)}
+#dashboardView .page-content.is-dashboard .date-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal)}
+
+/* pita statistik */
+#dashboardView .page-content.is-dashboard .stats-grid{grid-area:stats;position:relative;overflow:hidden;margin:0;gap:0;padding:4px;border-radius:20px;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  background:linear-gradient(115deg,#0e2036,#17375a 55%,#125a57);box-shadow:0 18px 34px -20px #10243acc}
+#dashboardView .page-content.is-dashboard .stats-grid::before{content:"";position:absolute;inset:-60% -10% auto auto;width:55%;height:220%;pointer-events:none;
+  background:radial-gradient(closest-side,#2fd1b244,transparent);animation:dxDrift 16s ease-in-out infinite alternate}
+#dashboardView .page-content.is-dashboard .stat-card{position:relative;z-index:1;min-height:0;padding:14px 20px;background:transparent;border:0;border-radius:0;box-shadow:none}
+#dashboardView .page-content.is-dashboard .stat-card+.stat-card{border-left:1px solid #ffffff16}
+#dashboardView .page-content.is-dashboard .stat-top{color:#a9bfd3;font-size:11.5px;font-weight:600}
+#dashboardView .page-content.is-dashboard .stat-icon{width:28px;height:28px;border-radius:9px;font-size:13px;background:#ffffff14;color:#fff}
+#dashboardView .page-content.is-dashboard .stat-icon.blue{background:#5b9bf033;color:#9cc7ff}#dashboardView .page-content.is-dashboard .stat-icon.amber{background:#f5b94233;color:#ffd48a}
+#dashboardView .page-content.is-dashboard .stat-icon.green{background:#34d39933;color:#8ef0c8}#dashboardView .page-content.is-dashboard .stat-icon.red{background:#f0706533;color:#ffaaa2}
+#dashboardView .page-content.is-dashboard .stat-card strong{font:800 34px/1 Manrope;letter-spacing:-1px;color:#fff;margin:10px 0 4px;font-variant-numeric:tabular-nums}
+#dashboardView .page-content.is-dashboard .stat-card small{display:block;font-size:10.5px;color:#86a0b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* filter + ringkasan */
+#dashboardView .page-content.is-dashboard .kpi-toolbar{grid-area:tool;padding:9px 14px;flex-direction:row;align-items:center;flex-wrap:wrap;justify-content:space-between}
+#dashboardView .page-content.is-dashboard .kpi-toolbar .employee-filters{gap:8px}
+#dashboardView .page-content.is-dashboard .kpi-toolbar select,#dashboardView .page-content.is-dashboard .kpi-toolbar .secondary-btn{height:34px;min-height:34px;min-width:0;padding:0 12px;font-size:12px;border-radius:10px;border:1px solid var(--line);background:#f6f9fb;color:var(--ink);transition:background .2s,border-color .2s,transform .15s}
+#dashboardView .page-content.is-dashboard .kpi-toolbar .secondary-btn:hover{background:#eaf2f6;border-color:#cfdce6}#dashboardView .page-content.is-dashboard .kpi-toolbar .secondary-btn:active{transform:scale(.97)}
+#dashboardView .page-content.is-dashboard #kpiRefreshButton{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700}#dashboardView .page-content.is-dashboard #kpiRefreshButton:hover{background:#0f6a5c}
+#dashboardView .page-content.is-dashboard #kpiLoadState{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#16836b;font-weight:700;background:#e9f6f2;padding:6px 11px;border-radius:999px}
+#dashboardView .page-content.is-dashboard #kpiLoadState::before{content:"";width:7px;height:7px;border-radius:50%;background:#1fb58f;animation:dxPulse 2s infinite}
+#dashboardView .page-content.is-dashboard .kpi-summary{grid-area:sum;margin:0;gap:8px;grid-template-columns:repeat(4,minmax(0,1fr))}
+#dashboardView .page-content.is-dashboard .kpi-summary>div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 10px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--card)}
+#dashboardView .page-content.is-dashboard .kpi-summary b{font:800 21px/1.1 Manrope;color:var(--navy);font-variant-numeric:tabular-nums}
+#dashboardView .page-content.is-dashboard .kpi-summary span{font-size:10px;margin-top:3px;line-height:1.2;color:var(--mut)}
+
+/* podium */
+#dashboardView .page-content.is-dashboard .kpi-podium-section{grid-area:pod;margin:0;padding:14px 16px;display:flex;flex-direction:column;min-height:0;border:1px solid var(--line);border-radius:16px;box-shadow:var(--card);
+  background:radial-gradient(420px 220px at 50% 100%,#f3d77a30,transparent 70%),linear-gradient(160deg,#fbfdfe,#eef4f7)}
+#dashboardView .page-content.is-dashboard .kpi-podium-heading{margin-bottom:8px}#dashboardView .page-content.is-dashboard .kpi-podium-heading h3{font:800 15px Manrope;margin:0 0 2px}
+#dashboardView .page-content.is-dashboard .kpi-podium-heading p{font-size:11px}
+#dashboardView .page-content.is-dashboard .kpi-podium{flex:1;min-height:0;max-width:none;width:100%;gap:10px;margin:0}
+#dashboardView .page-content.is-dashboard .kpi-podium-card{padding:10px 8px 0;border-radius:16px 16px 0 0;box-shadow:0 10px 22px -14px #10243a55;overflow:hidden}
+#dashboardView .page-content.is-dashboard .kpi-podium-card.rank-1{min-height:0;height:100%;box-shadow:0 16px 30px -14px #b58a2577}
+#dashboardView .page-content.is-dashboard .kpi-podium-card.rank-2{min-height:0;height:82%}#dashboardView .page-content.is-dashboard .kpi-podium-card.rank-3{min-height:0;height:70%}
+#dashboardView .page-content.is-dashboard .kpi-podium-card.rank-1::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,#ffffffaa 50%,transparent 65%);transform:translateX(-120%);animation:dxSheen 1.4s 1s var(--ease) 1 forwards}
+#dashboardView .page-content.is-dashboard .kpi-podium-medal{font-size:22px;margin-bottom:4px}
+#dashboardView .page-content.is-dashboard .kpi-podium-avatar{width:48px;height:48px;margin-bottom:6px;overflow:hidden}#dashboardView .page-content.is-dashboard .rank-1 .kpi-podium-avatar{width:60px;height:60px}
+#dashboardView .page-content.is-dashboard .kpi-podium-avatar img{width:100%;height:100%;border-radius:50%}
+#dashboardView .page-content.is-dashboard .kpi-podium-name{font-size:12.5px}#dashboardView .page-content.is-dashboard .kpi-podium-card>strong{font-size:18px;margin:4px 0 8px}
+
+/* ranking */
+#dashboardView .page-content.is-dashboard .dash-rank{grid-area:rank}
+#dashboardView .page-content.is-dashboard .dash-rank .employee-table-heading{margin-bottom:8px}#dashboardView .page-content.is-dashboard .dash-rank .employee-table-heading p{font-size:11px;margin:3px 0 0;color:var(--mut)}
+#dashboardView .page-content.is-dashboard .dash-rank .table-wrap{flex:1;min-height:0;overflow:auto}
+#dashboardView .page-content.is-dashboard .dash-rank thead th{position:sticky;top:0;z-index:1;background:#f5f8fb;padding:8px 10px;font-size:10.5px;color:var(--mut);font-weight:700}
+#dashboardView .page-content.is-dashboard .dash-rank td{padding:7px 10px;font-size:12.5px;border-bottom:1px solid #eef2f6}
+#dashboardView .page-content.is-dashboard .dash-rank tbody tr{transition:background .18s;animation:dxUp .45s var(--ease) both}
+#dashboardView .page-content.is-dashboard .dash-rank tbody tr:hover{background:#f4f9f8}
+#dashboardView .page-content.is-dashboard .dash-rank tbody tr:nth-child(1){animation-delay:.45s}#dashboardView .page-content.is-dashboard .dash-rank tbody tr:nth-child(2){animation-delay:.5s}#dashboardView .page-content.is-dashboard .dash-rank tbody tr:nth-child(3){animation-delay:.55s}
+#dashboardView .page-content.is-dashboard .dash-rank tbody tr:nth-child(4){animation-delay:.6s}#dashboardView .page-content.is-dashboard .dash-rank tbody tr:nth-child(5){animation-delay:.65s}#dashboardView .page-content.is-dashboard .dash-rank tbody tr:nth-child(n+6){animation-delay:.7s}
+#dashboardView .page-content.is-dashboard .dash-rank td:first-child b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#eef3f7;color:#52647a;font:800 12px Manrope}
+#dashboardView .page-content.is-dashboard .dash-rank tr:nth-child(1) td:first-child b{background:#f7e8b4;color:#8a6a12}#dashboardView .page-content.is-dashboard .dash-rank tr:nth-child(2) td:first-child b{background:#e3e9f0;color:#4a5b70}#dashboardView .page-content.is-dashboard .dash-rank tr:nth-child(3) td:first-child b{background:#f2dfd0;color:#7a4a2e}
+#dashboardView .page-content.is-dashboard .dash-rank .kpi-name-cell img,#dashboardView .page-content.is-dashboard .dash-rank .kpi-table-avatar{width:30px;height:30px}#dashboardView .page-content.is-dashboard .dash-rank .kpi-employee-id{margin-left:40px;margin-top:1px;font-size:10.5px}
+
+/* tren + departemen */
+#dashboardView .page-content.is-dashboard .dash-trend{grid-area:trend;margin:0}#dashboardView .page-content.is-dashboard .dash-dept{grid-area:dept;margin:0}
+#dashboardView .page-content.is-dashboard .dash-trend .employee-table-heading p,#dashboardView .page-content.is-dashboard .dash-dept .employee-table-heading p{display:none}
+#dashboardView .page-content.is-dashboard .dash-trend .employee-table-heading,#dashboardView .page-content.is-dashboard .dash-dept .employee-table-heading{margin-bottom:10px}
+#dashboardView .page-content.is-dashboard .kpi-trend,#dashboardView .page-content.is-dashboard .kpi-department-performance{flex:1;min-height:0;overflow:auto;gap:11px;align-content:start}
+#dashboardView .page-content.is-dashboard .kpi-trend-row{grid-template-columns:88px minmax(60px,1fr) 70px;font-size:12px}
+#dashboardView .page-content.is-dashboard .dash-dept .kpi-trend-row{grid-template-columns:minmax(70px,110px) minmax(60px,1fr) auto}
+#dashboardView .page-content.is-dashboard .kpi-trend-track{height:9px;background:#e9eff4}
+#dashboardView .page-content.is-dashboard .kpi-trend-track i{background:linear-gradient(90deg,#147d6c,#2fc4a4);transform-origin:left;animation:dxGrow 1s .5s var(--ease) both}
+
+/* alur approval + akses cepat */
+#dashboardView .page-content.is-dashboard .workflow-panel{grid-area:flow}#dashboardView .page-content.is-dashboard .quick-panel{grid-area:quick;overflow:auto}
+#dashboardView .page-content.is-dashboard .panel-heading{margin-bottom:6px}#dashboardView .page-content.is-dashboard .panel-heading p{display:none}
+#dashboardView .page-content.is-dashboard .pill{font-size:9.5px;padding:5px 9px}
+#dashboardView .page-content.is-dashboard .workflow{margin-top:0;flex:1;min-height:0;overflow:auto;position:relative}
+#dashboardView .page-content.is-dashboard .workflow-step{padding:7px 2px;gap:11px}
+#dashboardView .page-content.is-dashboard .step-number{width:28px;height:28px;border-radius:50%;background:linear-gradient(145deg,#1b4468,#10243a);color:#fff}
+#dashboardView .page-content.is-dashboard .workflow-step:last-child .step-number{background:linear-gradient(145deg,#1b9a82,#147d6c)}
+#dashboardView .page-content.is-dashboard .workflow-step b,#dashboardView .page-content.is-dashboard .quick-action b{font-size:12px}#dashboardView .page-content.is-dashboard .workflow-step small,#dashboardView .page-content.is-dashboard .quick-action small{font-size:10.5px}
+#dashboardView .page-content.is-dashboard .quick-action{padding:7px 4px;border-radius:10px;border-top-color:#edf0f3;transition:background .2s}
+#dashboardView .page-content.is-dashboard .quick-action:first-of-type{margin-top:0}
+#dashboardView .page-content.is-dashboard .quick-icon{width:28px;height:28px;border-radius:9px;transition:background .2s,color .2s}
+#dashboardView .page-content.is-dashboard .quick-action i{transition:transform .2s}
+#dashboardView .page-content.is-dashboard .quick-action:hover{background:#f3f8f7}#dashboardView .page-content.is-dashboard .quick-action:hover i{transform:translateX(4px);color:var(--teal)}
+#dashboardView .page-content.is-dashboard .quick-action:hover .quick-icon{background:var(--teal);color:#fff}
+
+/* catatan sistem */
+#dashboardView .page-content.is-dashboard .notice{grid-area:note;margin:0;padding:7px 12px;align-items:center;border-radius:12px}
+#dashboardView .page-content.is-dashboard .notice>div{display:flex;align-items:baseline;flex-wrap:wrap}#dashboardView .page-content.is-dashboard .notice p{display:inline;margin:0 0 0 8px;font-size:10.5px}
+
+/* animasi masuk: satu urutan saat Dashboard dibuka */
+#dashboardView .page-content.is-dashboard .welcome-row,#dashboardView .page-content.is-dashboard .stats-grid,#dashboardView .page-content.is-dashboard .kpi-toolbar,#dashboardView .page-content.is-dashboard .kpi-summary,#dashboardView .page-content.is-dashboard .kpi-podium-section,
+#dashboardView .page-content.is-dashboard .dash-rank,#dashboardView .page-content.is-dashboard .dash-dept,#dashboardView .page-content.is-dashboard .workflow-panel,#dashboardView .page-content.is-dashboard .quick-panel,#dashboardView .page-content.is-dashboard .dash-trend,#dashboardView .page-content.is-dashboard .notice{animation:dxUp .6s var(--ease) both}
+#dashboardView .page-content.is-dashboard .stats-grid{animation-delay:.05s}#dashboardView .page-content.is-dashboard .kpi-toolbar{animation-delay:.1s}#dashboardView .page-content.is-dashboard .kpi-summary{animation-delay:.14s}
+#dashboardView .page-content.is-dashboard .kpi-podium-section{animation-delay:.18s}#dashboardView .page-content.is-dashboard .dash-rank{animation-delay:.22s}#dashboardView .page-content.is-dashboard .dash-dept{animation-delay:.26s}
+#dashboardView .page-content.is-dashboard .workflow-panel{animation-delay:.3s}#dashboardView .page-content.is-dashboard .quick-panel{animation-delay:.34s}#dashboardView .page-content.is-dashboard .dash-trend{animation-delay:.38s}#dashboardView .page-content.is-dashboard .notice{animation-delay:.42s}
+@keyframes dxUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dxGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes dxSheen{to{transform:translateX(120%)}}
+@keyframes dxDrift{from{transform:translate(0,0)}to{transform:translate(-18%,12%)}}
+@keyframes dxPulse{0%{box-shadow:0 0 0 0 #1fb58f66}70%,100%{box-shadow:0 0 0 7px #1fb58f00}}
+@media(prefers-reduced-motion:reduce){#dashboardView .page-content.is-dashboard *,#dashboardView .page-content.is-dashboard *::before,#dashboardView .page-content.is-dashboard *::after{animation:none!important;transition:none!important}}
+
+/* layar kecil: satu kolom */
+@media(max-width:1180px){
+  #dashboardView .page-content.is-dashboard{min-height:0;grid-template-columns:minmax(0,1fr);grid-template-rows:none;
+    grid-template-areas:"head" "stats" "tool" "sum" "pod" "rank" "dept" "flow" "quick" "trend" "note"}
+  #dashboardView .page-content.is-dashboard .kpi-podium-section{min-height:320px}
+  #dashboardView .page-content.is-dashboard .dash-rank .table-wrap{max-height:420px}
+  #dashboardView .page-content.is-dashboard .panel{overflow:visible}
+}

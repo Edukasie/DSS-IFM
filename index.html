@@ -4,15 +4,53 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#10243a">
-  <title>DSS | Digital Suggestion System</title>
+  <meta name="description" content="DSS — Digital System Suggestion. Sistem sumbang saran dan improvement Maintenance.">
+  <title>DSS | Digital System Suggestion</title>
   <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/kpi.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
-<body>
+<body class="auth-pending">
+  <section id="authLoadingView" class="auth-loading" role="status" aria-live="polite">
+    <div class="auth-loading-card">
+      <div class="auth-loading-mark">D</div>
+      <strong>Digital System Suggestion</strong>
+      <span>Memeriksa sesi pengguna...</span>
+      <div class="auth-loading-track"><i></i></div>
+    </div>
+  </section>
+
   <section id="loginView" class="login-shell">
-    <div class="login-brand">
-      <div class="brand-mark">D</div>
-      <div><span>MAINTENANCE IMPROVEMENT</span><h1>Digital Suggestion</h1><p>Catat ide. Dokumentasikan improvement.</p></div>
+    <div class="login-lamp-scene" id="loginLamp" data-power="on" data-color="warm" aria-label="Lampu interaktif">
+      <div class="lamp-atmosphere"></div>
+      <div class="lamp-light-cone"></div>
+      <div class="lamp-floor-glow"></div>
+      <div class="lamp-assembly">
+        <button class="lamp-head" id="lampPowerToggle" type="button"
+                aria-label="Matikan lampu" aria-pressed="true" title="Klik kap lampu untuk menyalakan atau mematikan">
+          <span class="lamp-bulb"></span>
+        </button>
+        <div class="lamp-neck"></div>
+        <button class="lamp-pull" id="lampPull" type="button"
+                aria-label="Tarik tali untuk mengganti warna lampu" title="Tarik tali untuk mengganti warna">
+          <span class="lamp-cord"></span><span class="lamp-pull-knob"></span>
+        </button>
+        <div class="lamp-stand"></div>
+        <div class="lamp-base"></div>
+      </div>
+      <div class="lamp-caption" id="lampCaption" aria-live="polite">WARM • ON</div>
+      <div class="lamp-hint">Klik lampu untuk ON/OFF · Tarik tali untuk ganti warna</div>
+    </div>
+    <div class="login-brand login-brand-logo" role="img" aria-label="EDUKASIE E-DSS Digital System Suggestion">
+      <span class="lb-cubewrap"><img class="lb-cube" src="assets/icons/dss-icon@2x.png" alt="" width="92" height="92" decoding="async"></span>
+      <div class="lb-text">
+        <div class="lb-word"><span class="lb-e">E</span><span class="lb-dash">-</span><span class="lb-dss">DSS</span></div>
+        <span class="lb-rule"></span>
+        <div class="lb-tag"><b>EDUKASIE</b> DIGITAL SYSTEM SUGGESTION</div>
+      </div>
     </div>
     <div class="login-card">
       <span class="eyebrow">WELCOME BACK</span>
@@ -25,7 +63,7 @@
         <div id="message" role="status" aria-live="polite"></div>
       </form>
     </div>
-    <footer>Digital Suggestion &amp; Improvement System · Maintenance</footer>
+    <footer>Digital System Suggestion &amp; Improvement System · Maintenance</footer>
   </section>
 
   <section id="dashboardView" class="app-shell" hidden>
@@ -33,8 +71,9 @@
      <div class="side-brand">
   <img
     class="edukasie-logo"
-    src="assets/images/edukasie-logo.jpg"
-    alt="EduKasie Logo"
+    src="assets/icons/dss-icon@2x.png"
+    alt="Logo DSS"
+    width="52" height="52"
   >
   <div class="side-brand-label">
     <b>DSS</b>
@@ -46,6 +85,7 @@
         <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span>Dashboard</button>
         <button class="nav-link" data-page="suggestions"><span class="nav-icon">✦</span>Data Suggestion</button>
         <button class="nav-link" data-page="approvals"><span class="nav-icon">✓</span>Approval</button>
+        <button class="nav-link" data-page="kpi"><span class="nav-icon">★</span>KPI Suggestion</button>
         <button class="nav-link" data-page="employees"><span class="nav-icon">♙</span>Data Karyawan</button>
         <button class="nav-link" data-page="departments"><span class="nav-icon">▤</span>Departemen</button>
       </nav>
@@ -54,17 +94,19 @@
         <button id="logoutButton" class="logout-btn"><span>↪</span> Keluar</button>
       </div>
     </aside>
+    <button id="sidebarBackdrop" class="sidebar-backdrop" type="button"
+            aria-label="Tutup menu navigasi" tabindex="-1"></button>
 
     <main class="main-area">
       <header class="topbar">
         <button id="menuToggle" class="menu-toggle" aria-label="Buka menu">☰</button>
-        <div><span class="top-eyebrow">MAINTENANCE / DSS</span><div class="top-title">Digital Suggestion System</div></div>
-        <div class="top-user"><div class="avatar" id="userAvatar">A</div><div class="user-meta"><b id="userName">Administrator</b><small id="userRole">ADMIN</small></div></div>
+        <div><span class="top-eyebrow">MAINTENANCE / DSS</span><div class="top-title">Digital System Suggestion</div></div>
+        <div class="top-user"><button type="button" class="profile-trigger" id="profileTrigger" title="Atur foto profil"><span class="avatar" id="userAvatar">A</span></button><div class="user-meta" role="button" tabindex="0" aria-label="Buka pengaturan foto profil"><b id="userName">Administrator</b><small id="userRole">ADMIN</small></div></div>
       </header>
 
-      <section class="page-content">
+      <section class="page-content is-dashboard">
         <div class="welcome-row">
-          <div><span class="eyebrow">ADMINISTRATOR PANEL</span><h1 id="pageTitle">Dashboard</h1><p id="welcomeText">Pantau aktivitas suggestion dan proses improvement Maintenance.</p></div>
+          <div><span class="eyebrow">MAINTENANCE / DSS</span><h1 id="pageTitle">Dashboard</h1><p id="welcomeText">Pantau aktivitas suggestion dan proses improvement Maintenance.</p></div>
           <div class="date-chip" id="todayLabel">DSS WORKSPACE</div>
         </div>
 
@@ -96,6 +138,54 @@
           <div class="notice"><span>i</span><div><b>Dashboard tahap awal</b><p>Autentikasi sudah aktif. Angka ringkasan dan daftar suggestion akan ditampilkan setelah endpoint data dashboard selesai dibuat di backend.</p></div></div>
         </div>
 
+        <section id="kpiPage" class="employees-page" hidden>
+          <div class="employee-toolbar panel kpi-toolbar">
+            <div class="employee-filters">
+              <select id="kpiPeriod"><option value="all">Seluruh Periode</option><option value="month">Bulanan</option><option value="year">Tahunan</option></select>
+              <select id="kpiMonth">
+                <option value="1">Januari</option><option value="2">Februari</option><option value="3">Maret</option>
+                <option value="4">April</option><option value="5">Mei</option><option value="6">Juni</option>
+                <option value="7">Juli</option><option value="8">Agustus</option><option value="9">September</option>
+                <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
+              </select>
+              <select id="kpiYear"></select>
+              <button id="kpiRefreshButton" class="secondary-btn" type="button">Tampilkan</button>
+              <button id="exportKpiExcel" class="secondary-btn" type="button">Export Excel</button>
+              <button id="exportKpiPdf" class="secondary-btn" type="button">Export PDF</button>
+            </div>
+            <span id="kpiLoadState" class="live-indicator">Siap</span>
+          </div>
+          <div class="employee-summary kpi-summary">
+            <div><b id="kpiTotalPoints">0</b><span>Total Poin</span></div>
+            <div><b id="kpiApprovedSuggestions">0</b><span>Suggestion Final</span></div>
+            <div><b id="kpiParticipants">0</b><span>Karyawan Berkontribusi</span></div>
+            <div><b id="kpiMyPoints">0</b><span>Poin Saya</span></div>
+          </div>
+          <section class="kpi-podium-section" aria-label="Tiga peringkat teratas">
+            <div class="kpi-podium-heading"><div><span class="eyebrow">TOP PERFORMER</span><h3>Improvement Champions</h3><p>Tiga karyawan dengan poin tertinggi pada periode terpilih.</p></div></div>
+            <div id="kpiPodium" class="kpi-podium">
+              <div class="kpi-podium-empty">Memuat peringkat terbaik...</div>
+            </div>
+            </section>
+
+          <div class="panel employee-table-panel dash-rank">
+            <div class="employee-table-heading"><div><h3>Ranking Karyawan</h3><p id="kpiRankingSubtitle">Peringkat berdasarkan poin suggestion final.</p></div></div>
+            <div class="table-wrap">
+              <table class="employee-table">
+                <thead><tr><th>Rank</th><th>Nama Karyawan</th><th>Departemen</th><th>Suggestion Final</th><th>Total Poin</th></tr></thead>
+                <tbody id="kpiRankingBody"><tr><td colspan="5" class="table-empty">Memuat data KPI...</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel employee-table-panel kpi-trend-panel dash-trend">
+            <div class="employee-table-heading"><div><h3>Tren Poin Bulanan</h3><p>Akumulasi poin berdasarkan tanggal persetujuan final.</p></div></div>
+            <div id="kpiTrend" class="kpi-trend"></div>
+          </div>
+          <div class="panel employee-table-panel kpi-trend-panel dash-dept">
+            <div class="employee-table-heading"><div><h3>Performa Departemen</h3><p>Perbandingan poin kontribusi seluruh departemen pada periode terpilih.</p></div></div>
+            <div id="kpiDepartmentPerformance" class="kpi-department-performance"><p class="muted">Memuat performa departemen...</p></div>
+          </div>
+        </section>
 
         <section id="employeesPage" class="employees-page" hidden>
           <div class="employee-toolbar panel">
@@ -104,7 +194,7 @@
               <select id="employeeRoleFilter">
                 <option value="">Semua Role</option>
                 <option value="ADMIN">ADMIN</option><option value="EMPLOYEE">EMPLOYEE</option>
-                <option value="LEADER">LEADER</option><option value="SUPERVISOR">SUPERVISOR</option>
+                <option value="LEADER">KaSie</option><option value="SUPERVISOR">SUPERVISOR</option>
                 <option value="MANAGER">MANAGER</option>
               </select>
               <select id="employeeStatusFilter">
@@ -139,12 +229,323 @@
                 <label>Nama Lengkap<input id="employeeNameInput" required maxlength="120" placeholder="Nama karyawan"></label>
                 <label>Username<input id="employeeUsernameInput" required maxlength="80" placeholder="username"></label>
                 <label>Email (opsional)<input id="employeeEmailInput" type="email" maxlength="120" placeholder="nama@perusahaan.com"></label>
-                <label>Departemen<select id="employeeDepartmentInput" required><option value="1">Maintenance</option></select></label>
-                <label>Role<select id="employeeRoleInput" required><option value="EMPLOYEE">EMPLOYEE</option><option value="LEADER">LEADER</option><option value="SUPERVISOR">SUPERVISOR</option><option value="MANAGER">MANAGER</option><option value="ADMIN">ADMIN</option></select></label>
+                <label>Departemen<select id="employeeDepartmentInput" required disabled><option value="">Memuat departemen aktif...</option></select></label>
+                <label>Role<select id="employeeRoleInput" required><option value="EMPLOYEE">EMPLOYEE</option><option value="LEADER">KaSie</option><option value="SUPERVISOR">SUPERVISOR</option><option value="MANAGER">MANAGER</option><option value="ADMIN">ADMIN</option></select></label>
                 <label id="employeePasswordField" class="full-field">Password awal<input id="employeePasswordInput" type="password" minlength="6" autocomplete="new-password" placeholder="Minimal 6 karakter"><small>Password minimal 6 karakter.</small></label>
+                <label class="full-field employee-photo-field">Foto Profil <input id="employeePhotoInput" type="file" accept="image/jpeg,image/png,image/webp"><small>Opsional · JPG, PNG, WebP · Maksimal 2 MB. Saat edit, foto baru akan menggantikan foto lama.</small><span id="employeePhotoPreview" class="employee-photo-preview">Belum ada foto dipilih</span><button id="uploadEmployeePhotoButton" type="button" class="secondary-btn" hidden>Upload Foto ke Server</button><small id="employeePhotoStatus" role="status"></small></label>
               </div>
               <div id="employeeFormMessage" class="form-message" role="status" aria-live="polite"></div>
               <div class="modal-actions"><button id="cancelEmployeeButton" class="secondary-btn" type="button">Batal</button><button id="saveEmployeeButton" class="primary-btn" type="submit">Simpan Karyawan</button></div>
+            </form>
+          </div>
+        </div>
+
+
+        <section id="suggestionsPage" class="employees-page" hidden>
+          <div class="employee-toolbar panel">
+            <div class="employee-filters">
+              <input id="suggestionSearch" type="search" placeholder="Cari nomor atau judul suggestion...">
+              <button id="suggestionSearchButton" class="secondary-btn" type="button">Cari</button>
+            </div>
+            <button id="addSuggestionButton" class="primary-btn employee-add-btn" type="button">＋ Buat Suggestion</button>
+          </div>
+
+          <div class="employee-summary suggestion-summary">
+            <div><b id="suggestionCount">0</b><span>Total Suggestion</span></div>
+            <div><b id="suggestionDraftCount">0</b><span>Draft</span></div>
+            <div><b id="suggestionSubmittedCount">0</b><span>Disubmit</span></div>
+          </div>
+
+          <div class="panel employee-table-panel">
+            <div class="employee-table-heading">
+              <div><h3>Daftar Improvement</h3><p>Daftar usulan yang kamu ajukan atau ikuti sebagai kontributor.</p></div>
+              <span id="suggestionLoadState" class="employee-load-state">Belum dimuat</span>
+            </div>
+            <div class="table-wrap">
+              <table class="employee-table suggestion-table">
+                <thead>
+                  <tr><th>NOMOR</th><th>JUDUL</th><th>KATEGORI</th><th>PENGUSUL</th><th>KONTRIBUTOR</th><th>STATUS</th><th>AKSI</th></tr>
+                </thead>
+                <tbody id="suggestionTableBody">
+                  <tr><td colspan="7" class="table-empty">Belum ada data suggestion.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div id="suggestionModal" class="modal-backdrop" hidden>
+          <div class="employee-modal suggestion-modal" role="dialog" aria-modal="true" aria-labelledby="suggestionModalTitle">
+            <div class="modal-heading">
+              <div>
+                <span class="eyebrow">IDE IMPROVEMENT</span>
+                <h2 id="suggestionModalTitle">Buat Suggestion</h2>
+                <p>Dokumentasikan masalah, tindakan perbaikan, dan hasil improvement.</p>
+              </div>
+              <button id="closeSuggestionModal" class="modal-close" type="button" aria-label="Tutup">×</button>
+            </div>
+            <form id="suggestionForm">
+              <div class="ss-form-intro">
+                <span class="ss-step-chip">FORM SUMBANG SARAN · MAINTENANCE</span>
+                <p>Lengkapi informasi improvement, dokumentasi Before–After, dan dampak perbaikannya.</p>
+              </div>
+              <section class="ss-form-section">
+                <h3>1. Identitas dan informasi suggestion</h3>
+                <div class="employee-form-grid">
+                  <label class="full-field">Judul Sumbang Saran
+                    <input id="suggestionTitle" required maxlength="180" placeholder="Contoh: Mengurangi waktu setup mesin">
+                  </label>
+                  <label>Kategori
+                    <select id="suggestionCategory" required><option value="">Memuat kategori...</option></select>
+                  </label>
+                  <label>Kontributor tambahan
+                    <select id="suggestionContributors" multiple size="4"></select>
+                    <small>Pengusul utama otomatis menjadi kontributor. Pilih beberapa nama dengan Ctrl atau Shift.</small>
+                  </label>
+                  <label class="full-field">Lokasi / Mesin
+                    <input id="suggestionLocation" maxlength="180" placeholder="Contoh: Area Packing - Mesin 01">
+                  </label>
+                </div>
+              </section>
+              <section class="ss-form-section">
+                <h3>2. Dokumentasi kondisi Before–After</h3>
+                <div class="ss-photo-grid">
+                  <div class="ss-photo-card before">
+                    <label for="suggestionBeforeFiles">Foto kondisi BEFORE</label>
+                    <input id="suggestionBeforeFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+                    <small>JPG, PNG, WEBP · Maks. 8 MB per foto</small>
+                    <div id="suggestionBeforePreview" class="ss-photo-preview"><span>Belum ada foto dipilih</span></div>
+                  </div>
+                  <div class="ss-photo-card after">
+                    <label for="suggestionAfterFiles">Foto kondisi AFTER</label>
+                    <input id="suggestionAfterFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+                    <small>JPG, PNG, WEBP · Maks. 8 MB per foto</small>
+                    <div id="suggestionAfterPreview" class="ss-photo-preview"><span>Belum ada foto dipilih</span></div>
+                  </div>
+                </div>
+              </section>
+              <section class="ss-form-section">
+                <h3>3. Kondisi, masalah, dan proses kerja</h3>
+                <div class="employee-form-grid">
+                  <label class="full-field">Kondisi / Temuan (Before)
+                    <textarea id="suggestionBefore" required rows="3" maxlength="5000" placeholder="Jelaskan kondisi atau masalah sebelum improvement."></textarea>
+                  </label>
+                  <label class="full-field">Tindakan Improvement
+                    <textarea id="suggestionAction" required rows="3" maxlength="5000" placeholder="Jelaskan ide dan tindakan perbaikan yang dilakukan."></textarea>
+                  </label>
+                  <label class="full-field">Kondisi / Hasil Setelah Perbaikan (After)
+                    <textarea id="suggestionAfter" required rows="3" maxlength="5000" placeholder="Jelaskan hasil setelah improvement."></textarea>
+                  </label>
+                  <label>Masalah / Risiko Sebelum
+                    <textarea id="suggestionRiskBefore" rows="3" maxlength="3000" placeholder="Risiko atau dampak sebelum perbaikan"></textarea>
+                  </label>
+                  <label>Perubahan / Risiko yang Berkurang
+                    <textarea id="suggestionRiskReduced" rows="3" maxlength="3000" placeholder="Risiko yang berkurang setelah perbaikan"></textarea>
+                  </label>
+                  <label>Proses Kerja Sebelum
+                    <textarea id="suggestionProcessBefore" rows="3" maxlength="3000" placeholder="Alur kerja sebelum improvement"></textarea>
+                  </label>
+                  <label>Proses Kerja Sesudah
+                    <textarea id="suggestionProcessAfter" rows="3" maxlength="3000" placeholder="Alur kerja sesudah improvement"></textarea>
+                  </label>
+                  <label>Manfaat yang Diharapkan
+                    <input id="suggestionExpected" maxlength="500" placeholder="Opsional">
+                  </label>
+                  <label>Manfaat Aktual
+                    <input id="suggestionActual" maxlength="500" placeholder="Opsional">
+                  </label>
+                </div>
+              </section>
+              <section class="ss-form-section">
+                <h3>4. Aspek pengerjaan SS</h3>
+                <p class="ss-help">Pilih satu atau beberapa aspek yang terdampak oleh improvement.</p>
+                <div class="ss-aspect-grid">
+                  <label><input type="checkbox" name="ssAspect" value="QUALITY"> Quality</label>
+                  <label><input type="checkbox" name="ssAspect" value="COST"> Cost</label>
+                  <label><input type="checkbox" name="ssAspect" value="DELIVERY"> Delivery</label>
+                  <label><input type="checkbox" name="ssAspect" value="SAFETY"> Safety</label>
+                  <label><input type="checkbox" name="ssAspect" value="MORAL"> Moral</label>
+                  <label><input type="checkbox" name="ssAspect" value="PRODUCTIVITY"> Productivity</label>
+                  <label><input type="checkbox" name="ssAspect" value="ENVIRONMENT"> Environment</label>
+                </div>
+              </section>
+              <section class="ss-form-section">
+                <div class="ss-section-heading">
+                  <div><h3>5. Perbandingan hasil / dampak perbaikan</h3><p class="ss-help">Isi indikator yang relevan. Baris dapat ditambah atau dihapus.</p></div>
+                  <button id="addIndicatorButton" type="button" class="secondary-btn">+ Tambah indikator</button>
+                </div>
+                <div class="ss-indicator-wrap">
+                  <table class="ss-indicator-table">
+                    <thead><tr><th>Indikator</th><th>Satuan</th><th>Sebelum</th><th>Sesudah</th><th>Selisih / Hemat</th><th>PIC</th><th>Tanggal ukur</th><th>Catatan</th><th></th></tr></thead>
+                    <tbody id="ssIndicatorRows"></tbody>
+                  </table>
+                </div>
+                <small class="ss-help">Contoh: waktu proses (menit), defect/reject (pcs), downtime (menit), energi (kWh/m³), biaya operasional (Rp), atau indikator lain.</small>
+              </section>
+              <div class="suggestion-form-note">Foto dan data aktual digunakan sebagai bukti perubahan. Data indikator dapat dilengkapi sesuai jenis improvement.</div>
+              <div id="suggestionFormMessage" class="form-message" role="status" aria-live="polite"></div>
+              <div class="modal-actions ss-modal-actions">
+                <button id="cancelSuggestionButton" class="secondary-btn" type="button">Batal</button>
+                <button id="saveSuggestionDraft" class="secondary-btn" type="button">Simpan Draft</button>
+                <button id="submitSuggestionButton" class="primary-btn" type="submit">Submit Suggestion</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="suggestionDetailModal" class="modal-backdrop" hidden>
+          <div class="employee-modal suggestion-detail-modal" role="dialog" aria-modal="true" aria-labelledby="suggestionDetailTitle">
+            <div class="modal-heading"><div><span class="eyebrow">DETAIL SUMBANG SARAN</span><h2 id="suggestionDetailTitle">Detail Suggestion</h2><p id="suggestionDetailSubtitle"></p></div><button id="closeSuggestionDetail" class="modal-close" type="button">×</button></div>
+            <div id="suggestionDetailBody" class="suggestion-detail-body"></div>
+            <div class="modal-actions"><button id="closeSuggestionDetailBottom" class="secondary-btn" type="button">Tutup</button></div>
+          </div>
+        </div>
+
+        <section id="approvalsPage" class="employees-page" hidden>
+          <div class="panel approval-intro">
+            <div>
+              <span class="eyebrow">WORKFLOW PERSETUJUAN</span>
+              <h2>Approval Sumbang Saran</h2>
+              <p>Urutan persetujuan: KaSie → Supervisor → Manager.</p>
+            </div>
+            <button id="refreshApprovalsButton" class="secondary-btn" type="button">↻ Refresh</button>
+          </div>
+
+          <div id="approvalAssignmentPanel" class="panel approval-assignment" hidden>
+            <div class="employee-table-heading">
+              <div>
+                <h3>Pengaturan Approver Departemen</h3>
+                <p>Admin menetapkan satu approver aktif untuk setiap tahap di setiap departemen.</p>
+              </div>
+            </div>
+            <div class="approval-assignment-form">
+              <label>Departemen<select id="approvalDepartmentSelect"></select></label>
+              <label>Level
+                <select id="approvalLevelSelect">
+                  <option value="LEADER">KaSie</option>
+                  <option value="SUPERVISOR">Supervisor</option>
+                  <option value="MANAGER">Manager</option>
+                </select>
+              </label>
+              <label>Approver<select id="approvalUserSelect"></select></label>
+              <button id="saveApprovalAssignment" class="primary-btn" type="button">Simpan Penugasan</button>
+            </div>
+            <div id="approvalAssignmentList" class="approval-assignment-list"></div>
+          </div>
+
+          <div class="employee-summary approval-summary">
+            <div><b id="approvalPendingCount">0</b><span>Menunggu keputusan</span></div>
+            <div><b id="approvalApprovedCount">0</b><span>Disetujui</span></div>
+            <div><b id="approvalRevisionCount">0</b><span>Revisi / Ditolak</span></div>
+          </div>
+
+          <div class="panel employee-table-panel">
+            <div class="employee-table-heading">
+              <div>
+                <h3>Daftar Approval</h3>
+                <p>Tugas persetujuan sesuai penugasan dan departemen.</p>
+              </div>
+              <span id="approvalLoadState" class="employee-load-state">Belum dimuat</span>
+            </div>
+            <div class="table-wrap">
+              <table class="employee-table approval-table">
+                <thead>
+                  <tr>
+                    <th>NOMOR</th><th>JUDUL</th><th>DEPARTEMEN</th><th>PENGUSUL</th>
+                    <th>TAHAP</th><th>STATUS TAHAP</th><th>STATUS SS</th><th>AKSI</th>
+                  </tr>
+                </thead>
+                <tbody id="approvalTableBody">
+                  <tr><td colspan="8" class="table-empty">Belum ada tugas approval.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <div id="approvalDecisionModal" class="modal-backdrop" hidden>
+          <div class="employee-modal approval-decision-modal" role="dialog" aria-modal="true" aria-labelledby="approvalDecisionTitle">
+            <div class="modal-heading">
+              <div>
+                <span class="eyebrow">KEPUTUSAN APPROVAL</span>
+                <h2 id="approvalDecisionTitle">Approval</h2>
+                <p id="approvalDecisionSubtitle"></p>
+              </div>
+              <button id="closeApprovalDecision" class="modal-close" type="button" aria-label="Tutup">×</button>
+            </div>
+            <section class="approval-submission-detail" aria-label="Detail suggestion">
+              <div class="approval-detail-heading"><b>Detail Suggestion</b><span id="approvalDetailState">Memuat detail...</span></div>
+              <div id="approvalSubmissionDetail" class="approval-submission-content">
+                <p class="muted">Memuat informasi pengajuan...</p>
+              </div>
+              <div id="approvalAttachmentList" class="approval-attachment-list"></div>
+            </section>
+            <div class="approval-workflow" id="approvalWorkflow"></div>
+            <label class="approval-note-label">
+              Catatan keputusan
+              <textarea id="approvalDecisionNote" rows="4" maxlength="3000" placeholder="Wajib diisi untuk revisi atau penolakan"></textarea>
+            </label>
+            <div id="approvalDecisionMessage" class="form-message" role="status"></div>
+            <div class="modal-actions">
+              <button id="cancelApprovalDecision" class="secondary-btn" type="button">Batal</button>
+              <button data-decision="REJECTED" class="danger-btn approval-decision-action" type="button">Reject</button>
+              <button data-decision="REVISION" class="secondary-btn approval-decision-action" type="button">Request Revision</button>
+              <button data-decision="APPROVED" class="primary-btn approval-decision-action" type="button">Approve</button>
+            </div>
+          </div>
+        </div>
+
+
+        <section id="departmentsPage" class="employees-page" hidden>
+          <div class="employee-toolbar panel">
+            <div class="employee-filters">
+              <input id="departmentSearch" type="search" placeholder="Cari nama atau kode departemen...">
+              <select id="departmentStatusFilter">
+                <option value="all">Semua Status</option>
+                <option value="active">Aktif</option>
+                <option value="inactive">Nonaktif</option>
+              </select>
+              <button id="departmentSearchButton" class="secondary-btn" type="button">Cari</button>
+            </div>
+            <button id="addDepartmentButton" class="primary-btn employee-add-btn" type="button">＋ Tambah Departemen</button>
+          </div>
+          <div class="employee-summary">
+            <div><b id="departmentCount">0</b><span>Total Departemen</span></div>
+            <div><b id="departmentActiveCount">0</b><span>Departemen Aktif</span></div>
+            <div><b id="departmentEmployeeCount">0</b><span>Karyawan Aktif</span></div>
+          </div>
+          <div class="panel employee-table-panel">
+            <div class="employee-table-heading">
+              <div><h3>Daftar Departemen</h3><p>Kelola unit organisasi dan struktur approver DSS.</p></div>
+              <span id="departmentLoadState" class="employee-load-state">Belum dimuat</span>
+            </div>
+            <div class="table-wrap">
+              <table class="employee-table department-table">
+                <thead><tr><th>KODE</th><th>NAMA DEPARTEMEN</th><th>KARYAWAN</th><th>STRUKTUR APPROVAL</th><th>STATUS</th><th>AKSI</th></tr></thead>
+                <tbody id="departmentTableBody"><tr><td colspan="6" class="table-empty">Memuat data departemen...</td></tr></tbody>
+              </table>
+            </div>
+            <p class="department-footnote">Departemen yang sudah memiliki histori tidak dihapus permanen. Nonaktifkan hanya jika tidak ada karyawan aktif atau suggestion yang masih diproses.</p>
+          </div>
+        </section>
+
+        <div id="departmentModal" class="modal-backdrop" hidden>
+          <div class="employee-modal" role="dialog" aria-modal="true" aria-labelledby="departmentModalTitle">
+            <div class="modal-heading">
+              <div><span class="eyebrow">MASTER ORGANISASI</span><h2 id="departmentModalTitle">Tambah Departemen</h2><p>Kelola identitas departemen DSS.</p></div>
+              <button id="closeDepartmentModal" class="modal-close" type="button" aria-label="Tutup">×</button>
+            </div>
+            <form id="departmentForm">
+              <input id="departmentRecordId" type="hidden">
+              <div class="employee-form-grid">
+                <label>Nama Departemen<input id="departmentNameInput" required maxlength="80" placeholder="Contoh: Production"></label>
+                <label>Kode Departemen<input id="departmentCodeInput" required maxlength="20" pattern="[A-Za-z0-9_-]{2,20}" placeholder="Contoh: PROD"><small>2–20 karakter, huruf, angka, strip, atau underscore.</small></label>
+              </div>
+              <div id="departmentFormMessage" class="form-message" role="status" aria-live="polite"></div>
+              <div class="modal-actions">
+                <button id="cancelDepartmentButton" class="secondary-btn" type="button">Batal</button>
+                <button id="saveDepartmentButton" class="primary-btn" type="submit">Simpan Departemen</button>
+              </div>
             </form>
           </div>
         </div>
@@ -166,12 +567,28 @@
 </footer>
     </main>
   </section>
+  <div class="modal-backdrop" id="profileModal" hidden>
+    <div class="employee-modal profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle">
+      <div class="modal-heading">
+        <div><h2 id="profileModalTitle">Foto Profil</h2><p>Unggah foto profil pribadi Anda (JPG, PNG, WebP · maks. 2 MB).</p></div>
+        <button type="button" class="modal-close" id="closeProfileModal" aria-label="Tutup">×</button>
+      </div>
+      <div class="profile-preview-wrap"><img id="profilePreview" alt="Preview foto profil" hidden><div id="profileInitialPreview" class="profile-initial-preview">U</div></div>
+      <input type="file" id="profilePhotoInput" accept="image/jpeg,image/png,image/webp">
+      <div id="profileMessage" class="form-message" role="status"></div>
+      <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelProfileModal">Batal</button><button type="button" class="primary-btn" id="saveProfilePhoto">Simpan Foto</button></div>
+    </div>
+  </div>
+
   <script src="assets/js/config.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/dashboard-fx.js" defer></script>
   <script>
     if ('serviceWorker' in navigator) {
       addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
     }
   </script>
+
+
 </body>
 </html>
